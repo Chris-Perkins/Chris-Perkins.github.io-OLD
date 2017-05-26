@@ -1,4 +1,5 @@
-#bar {
+#bar
+{
   position: absolute;
   left: 0%;
   top: 0%;
@@ -10,7 +11,8 @@
   text-align: center;
 }
 
-#terminal {
+#terminal
+{
   position: absolute;
   height: 100%;
   
@@ -24,19 +26,26 @@
   font-size: 100%;
   font-family: monospace, Courier, "Courier New";
   padding-left: 10px;
+  padding-right: 10px;
+
+  overflow-y: scroll;
 }
 
-[contenteditable="true"]:focus {
+[contenteditable="true"]:focus
+{
     outline: none;
 }
 
-#edit {
-  min-width: 50px;
+#input, #pastInput
+{
+  min-width: 20px;
+  max-width: 100%;
   color: #dadada;
   display: inline-block;
-  white-space: wrap;
+  overflow-wrap: auto;
 }
 
-#edit br {
+#input br, #pastInput br
+{
   display: none;
 }
