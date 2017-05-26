@@ -19,9 +19,24 @@
   top: 0%;
   
   background-color: #0A0A0A;
-  color: #dadada;
+  color: #50e077;
   
   font-size: 100%;
-  font-family: Courier;
+  font-family: monospace, Courier, "Courier New";
   padding-left: 10px;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+}
+
+#edit {
+  min-width: 50px;
+  color: #dadada;
+  display: inline-block;
+  white-space: wrap;
+}
+
+#edit br {
+  display: none;
 }
