@@ -27,6 +27,7 @@
   font-family: monospace, Courier, "Courier New";
   padding-left: 10px;
   padding-right: 10px;
+  line-height: 1.00;
 
   overflow-y: scroll;
 }
@@ -42,7 +43,6 @@
   max-width: 100%;
   color: #dadada;
   display: inline-block;
-  overflow-wrap: auto;
 }
 
 #input br, #pastInput br
