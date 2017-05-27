@@ -1,29 +1,28 @@
 var loc = "chrisperkins:~$ ";
-var ver = "1.0.5";
+var ver = "1.0.6";
 
 window.onload = function ()
 {
+    loadFunctions();
+
+    // Prevent paste
+    document.getElementById("terminal").addEventListener("paste", handlePaste);
+    // Newline on enter press, focus input on keypress
+    document.addEventListener("keydown", keyCheck);
+    //document.getElementById("terminal").addEventListener("keydown", keyCheck);
+    
+
+    // Header message
     printToTerminal("<span style='color:white'>" + 
-                        "ChrisPerkins.me - Home of your next Recruit [Version 1.0.5]<br>" +
+                        "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br>".format(ver) +
                         "Current Status: Looking for Summer 2018 Internships<br>" +
                         "<br>" + 
                     "</span>");
     
+    // Terminal line
     printToTerminal(loc +//non-editable location
             "<span id='input' contenteditable='true'></span>");//editable text
     
-    // Prevent paste
-    document.getElementById("terminal").addEventListener("paste", handlePaste);
-    // Focus on click
-    document.getElementById("terminal").addEventListener("click", clickFunction);
-    // New line on enter
-    document.getElementById("terminal").addEventListener("keydown", enterCheck);
-    focusInput();
-}
-
-function clickFunction(e)
-{
-    //placeCaretAtEnd(document.getElementById("input"));
     focusInput();
 }
 
@@ -41,8 +40,13 @@ function focusInput()
     document.getElementById("input").focus();
 }
 
-function enterCheck(e)
+function keyCheck(e)
 {
+    // If we didn't type in the input box, force caret to end of line
+    if (e.srcElement != document.getElementById("input"))
+    {
+        placeCaretAtInputEnd();
+    }
     // If we pressed enter...
     if (e.keyCode == 13)
     {
@@ -60,11 +64,13 @@ function enterCheck(e)
         // Append our line beginning again!
         printToTerminal(loc + //non-editable location
             "<span id='input' contenteditable='true'></span>");//editable text
-        focusInput();
-    } 
+    }
+    focusInput();
 }
 
-function placeCaretAtEnd(el) {
+function placeCaretAtInputEnd() {
+    el = document.getElementById("input");
+
     el.focus();
     if (typeof window.getSelection != "undefined"
             && typeof document.createRange != "undefined") 
@@ -96,23 +102,52 @@ function getCommand(text)
     whiteSpanBegin = "<span style='color:white'>";
     whiteSpanEnd = "</span>"
 
-    switch(text)
+    if (text.toLowerCase().startsWith("help"))
     {
-    case "help":
-        output = "You have access to the following commands:<br>";
-        break;
-    case "contact":
-        break;
-    case "github":
-        break;
-    case "about":
-        break;
-    // In an actual prompt, empty lines do nothing.
-    case "":
-        break;
-    default:
-        output = "Invalid command. Enter 'help' to view available commands.<br><br>";
-        break;
+        output = "You have access to the following commands:<br>" +
+                    "&nbsphelp - view available commands<br>" + 
+                    "&nbspabout - tells you about me<br>" + 
+                    "&nbspgithub - view my GitHub Link<br>" + 
+                    "&nbspcontact - display my contact information<br>" +
+                    "<br>";
     }
+    // Do nothing.
+    else if (text === "")
+    {
+    }
+    // Otherwise, invalid command
+    else
+    {
+        output = "'{0}' is an invalid command.<br>".format(text) +
+                 "Enter 'help' to view a list of available commands.<br><br>";
+    }
+
     printToTerminal(whiteSpanBegin + output + whiteSpanEnd);
+}
+
+function loadFunctions()
+{
+    // Create .format method
+    if (!String.prototype.format)
+    {
+        String.prototype.format = function()
+        {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number)
+            { 
+                return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+            });
+        };
+    }
+
+    // Create "startsWith" function to check prefixes
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position){
+            position = position || 0;
+            return this.substr(position, searchString.length) === searchString;
+        };
+    }
 }
