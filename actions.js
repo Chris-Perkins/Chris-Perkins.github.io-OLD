@@ -101,6 +101,12 @@ function getCommand(text)
     case "help":
         output = "You have access to the following commands:<br>";
         break;
+    case "contact":
+        break;
+    case "github":
+        break;
+    case "about":
+        break;
     // In an actual prompt, empty lines do nothing.
     case "":
         break;
