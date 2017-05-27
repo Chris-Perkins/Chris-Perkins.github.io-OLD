@@ -1,9 +1,16 @@
-var loc = "chrisperkins:~$ "
+var loc = "chrisperkins:~$ ";
+var ver = "1.0.5";
 
 window.onload = function ()
 {
-    document.getElementById("terminal").innerHTML += "<p>"+ loc +//non-editable location
-            "<span id=\"input\" contenteditable=\"true\"></span></p>";//editable text
+    printToTerminal("<span style='color:white'>" + 
+                        "ChrisPerkins.me - Home of your next Recruit [Version 1.0.5]<br>" +
+                        "Current Status: Looking for Summer 2018 Internships<br>" +
+                        "<br>" + 
+                    "</span>");
+    
+    printToTerminal(loc +//non-editable location
+            "<span id='input' contenteditable='true'></span>");//editable text
     
     // Prevent paste
     document.getElementById("terminal").addEventListener("paste", handlePaste);
@@ -39,8 +46,11 @@ function enterCheck(e)
     // If we pressed enter...
     if (e.keyCode == 13)
     {
-        // Do something with the text entered...
-        //alert(document.getElementById("input").textContent);
+        // Line break since enter was pressed
+        printToTerminal("<br>")
+
+        // Get the command for the text entered
+        getCommand(document.getElementById("input").textContent);
 
         // Make this line non-editable
         document.getElementById("input").contentEditable = false;
@@ -48,8 +58,8 @@ function enterCheck(e)
         document.getElementById("input").setAttribute("id", "pastInput");
         
         // Append our line beginning again!
-        document.getElementById("terminal").innerHTML += "<p>" + loc + //non-editable location
-            "<span id=\"input\" contenteditable=\"true\"></span></p>";//editable text
+        printToTerminal(loc + //non-editable location
+            "<span id='input' contenteditable='true'></span>");//editable text
         focusInput();
     } 
 }
@@ -73,4 +83,30 @@ function placeCaretAtEnd(el) {
         textRange.collapse(false);
         textRange.select();
     }
+}
+
+function printToTerminal(htmlString)
+{
+    document.getElementById("terminal").innerHTML += htmlString;
+}
+
+function getCommand(text)
+{
+    output = ""
+    whiteSpanBegin = "<span style='color:white'>";
+    whiteSpanEnd = "</span>"
+
+    switch(text)
+    {
+    case "help":
+        output = "You have access to the following commands:<br>";
+        break;
+    // In an actual prompt, empty lines do nothing.
+    case "":
+        break;
+    default:
+        output = "Invalid command. Enter 'help' to view available commands.<br><br>";
+        break;
+    }
+    printToTerminal(whiteSpanBegin + output + whiteSpanEnd);
 }
