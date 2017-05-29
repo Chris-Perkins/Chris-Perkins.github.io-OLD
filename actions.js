@@ -1,5 +1,6 @@
 var loc = "chrisperkins:~$ ";
-var ver = "1.0.6";
+var ver = "1.0.7";
+var time = 25;
 
 window.onload = function ()
 {
@@ -9,20 +10,28 @@ window.onload = function ()
     document.getElementById("terminal").addEventListener("paste", handlePaste);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
-    //document.getElementById("terminal").addEventListener("keydown", keyCheck);
     
+    launchSequence();
+    
+    focusInput();
+}
 
-    // Header message
+function launchSequence()
+{
     printToTerminal("<span style='color:white'>" + 
-                        "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br>".format(ver) +
-                        "Current Status: Looking for Summer 2018 Internships<br>" +
-                        "<br>" + 
-                    "</span>");
-    
+                "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br>".format(ver) +
+                "Current Status: Looking for Summer 2018 Internships<br>" +
+                "<br></span>" + 
+                "Enter 'help' to get started!<br><br>");
+    printInputLine();
+}
+
+function printInputLine()
+{
     // Terminal line
-    printToTerminal(loc +//non-editable location
-            "<span id='input' contenteditable='true'></span>");//editable text
-    
+    document.getElementById("terminal").innerHTML += "<span style='color:#50e077'>{0}</span>".format(loc)
+    printToTerminal("<span id='input' contenteditable='true'></span>");//editable text
+
     focusInput();
 }
 
@@ -40,32 +49,42 @@ function focusInput()
     document.getElementById("input").focus();
 }
 
+// Focuses input area if it exists
+// Otherwise, skips past dialogue animation
 function keyCheck(e)
 {
-    // If we didn't type in the input box, force caret to end of line
-    if (e.srcElement != document.getElementById("input"))
+    // If a valid entry point exists...
+    if (document.getElementById("input"))
     {
-        placeCaretAtInputEnd();
+        // If we didn't type in the input box, force caret to end of line
+        if (e.srcElement != document.getElementById("input"))
+        {
+            placeCaretAtInputEnd();
+        }
+        // If we pressed enter...
+        if (e.keyCode == 13)
+        {
+            // Line break since enter was pressed
+            printToTerminal("<br>")
+
+            // Get the command for the text entered
+            getCommand(document.getElementById("input").textContent);
+
+            // Make this line non-editable
+            document.getElementById("input").contentEditable = false;
+            // No longer a valid input, so set it to past input
+            document.getElementById("input").setAttribute("id", "pastInput");
+            
+            // Print next line of input
+            printInputLine();
+        }
+        focusInput();
     }
-    // If we pressed enter...
-    if (e.keyCode == 13)
+    // If a valid entrypoint does not exist, skip dialogue.
+    else
     {
-        // Line break since enter was pressed
-        printToTerminal("<br>")
-
-        // Get the command for the text entered
-        getCommand(document.getElementById("input").textContent);
-
-        // Make this line non-editable
-        document.getElementById("input").contentEditable = false;
-        // No longer a valid input, so set it to past input
-        document.getElementById("input").setAttribute("id", "pastInput");
-        
-        // Append our line beginning again!
-        printToTerminal(loc + //non-editable location
-            "<span id='input' contenteditable='true'></span>");//editable text
+        time = 0;
     }
-    focusInput();
 }
 
 function placeCaretAtInputEnd() {
@@ -88,6 +107,62 @@ function placeCaretAtInputEnd() {
         textRange.moveToElementText(el);
         textRange.collapse(false);
         textRange.select();
+    }
+}
+
+// Custom type writer function
+function typeWriter(text)
+{
+    time = 50;
+    typeWriterHelper(text, 0, "");
+}
+
+// Type writer function helper
+// Prints text recursively at a set timer
+// Parses out single tag html and adds to innerhtml separately.
+function typeWriterHelper(text, n, currentHTMLString)
+{
+    // Base case: reached end of string
+    // Alternate case: user skipped dialogue
+    if (n === text.length || time === 0)
+    {
+        // Print remaining string if skipped
+        printToTerminal(currentHTMLString + text.substr(n));
+
+        // Print user input line
+        printInputLine();
+        return;
+    }
+    else
+    {
+        // If not an html tag
+        if (currentHTMLString == "")
+        {
+            // If start of tag
+            if (text[n] == "<")
+            {
+                currentHTMLString += text[n];
+            }
+            else
+            {
+                printToTerminal(text[n]);
+            }
+        }
+        else
+        {
+            currentHTMLString += text[n];
+            
+            // If close an html string
+            if (text[n] == ">")
+            {
+                printToTerminal(currentHTMLString);
+                currentHTMLString = ""
+            }
+        }
+        setTimeout(function()
+        {
+            typeWriterHelper(text, n + 1, currentHTMLString)
+        }, time);
     }
 }
 
