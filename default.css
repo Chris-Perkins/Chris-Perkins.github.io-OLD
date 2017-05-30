@@ -7,7 +7,7 @@
   height: 100%;
   
   background-color: #3A3A3A;
-  color: #cfcfcf;
+  color: white;
   text-align: center;
 }
 
@@ -21,7 +21,6 @@
   top: 0%;
   
   background-color: #0A0A0A;
-  color: #dadada;
   
   font-size: 100%;
   font-family: monospace, Courier, "Courier New";
@@ -51,7 +50,7 @@
 {
   min-width: 20px;
   max-width: 100%;
-  color: #dadada;
+  color: #ededed;
   display: inline-block;
 }
 
