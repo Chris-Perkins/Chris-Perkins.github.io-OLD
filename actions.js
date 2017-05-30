@@ -1,7 +1,9 @@
 var loc = "chrisperkins:~$ ";
-var ver = "1.0.7";
+var ver = "1.0.8";
 var time = 25;
+var curID = 0;
 
+// When the document opens
 window.onload = function ()
 {
     loadFunctions();
@@ -12,25 +14,31 @@ window.onload = function ()
     document.addEventListener("keydown", keyCheck);
     
     launchSequence();
-    
-    focusInput();
 }
 
+// Sequence that occurs when user 
 function launchSequence()
 {
-    printToTerminal("<span style='color:white'>" + 
-                "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br>".format(ver) +
-                "Current Status: Looking for Summer 2018 Internships<br>" +
-                "<br></span>" + 
-                "Enter 'help' to get started!<br><br>");
-    printInputLine();
+    printToElement("<span style='color:white'>" + 
+                    "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
+                    "</span>", "terminal");
+    
+    time = 30;
+    
+    typeWriter("Hi, my name is Chris.<br>" + 
+                "I'm currently looking for summer 2018 internships.<br><br>" +
+                "I believe beauty lies in an overarching simplicity;<br>" + 
+                "I believe the best code makes complex ideas simple.<br>" + 
+                "Code should say and do more with less.<br><br>" + 
+                "Enter 'help' to get started.<br><br>", "color:#f2ef48", printInputLine);
 }
 
+// Print the line for user input
 function printInputLine()
 {
     // Terminal line
     document.getElementById("terminal").innerHTML += "<span style='color:#50e077'>{0}</span>".format(loc)
-    printToTerminal("<span id='input' contenteditable='true'></span>");//editable text
+    printToElement("<span id='input' contenteditable='true'></span>", "terminal");//editable text
 
     focusInput();
 }
@@ -65,7 +73,7 @@ function keyCheck(e)
         if (e.keyCode == 13)
         {
             // Line break since enter was pressed
-            printToTerminal("<br>")
+            printToElement("<br>", "terminal");
 
             // Get the command for the text entered
             getCommand(document.getElementById("input").textContent);
@@ -111,26 +119,30 @@ function placeCaretAtInputEnd() {
 }
 
 // Custom type writer function
-function typeWriter(text)
+function typeWriter(text, style, endFunction)
 {
-    time = 50;
-    typeWriterHelper(text, 0, "");
+    printToElement("<span id='{0}' style='{1}'></span>".format(curID, style), "terminal");
+    typeWriterHelper(text, 0, "", curID, endFunction);
+    curID += 1;
 }
 
 // Type writer function helper
 // Prints text recursively at a set timer
 // Parses out single tag html and adds to innerhtml separately.
-function typeWriterHelper(text, n, currentHTMLString)
+function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
 {
+    // extra time-out used on html tag end
+    extraTimeOut = 0;
+
     // Base case: reached end of string
     // Alternate case: user skipped dialogue
     if (n === text.length || time === 0)
     {
         // Print remaining string if skipped
-        printToTerminal(currentHTMLString + text.substr(n));
+        printToElement(currentHTMLString + text.substr(n), id);
 
-        // Print user input line
-        printInputLine();
+        endFunction();
+
         return;
     }
     else
@@ -145,7 +157,7 @@ function typeWriterHelper(text, n, currentHTMLString)
             }
             else
             {
-                printToTerminal(text[n]);
+                printToElement(text[n], id);
             }
         }
         else
@@ -155,28 +167,27 @@ function typeWriterHelper(text, n, currentHTMLString)
             // If close an html string
             if (text[n] == ">")
             {
-                printToTerminal(currentHTMLString);
+                printToElement(currentHTMLString, id);
                 currentHTMLString = ""
+                extraTimeOut = 200;
             }
         }
         setTimeout(function()
         {
-            typeWriterHelper(text, n + 1, currentHTMLString)
-        }, time);
+            typeWriterHelper(text, n + 1, currentHTMLString, id, endFunction)
+        }, time + extraTimeOut);
     }
 }
 
-function printToTerminal(htmlString)
+// Add "htmlString" to element with id "id"
+function printToElement(htmlString, id)
 {
-    document.getElementById("terminal").innerHTML += htmlString;
+    document.getElementById(id).innerHTML += htmlString;
 }
 
+// Parse user input for command
 function getCommand(text)
 {
-    output = ""
-    whiteSpanBegin = "<span style='color:white'>";
-    whiteSpanEnd = "</span>"
-
     if (text.toLowerCase().startsWith("help"))
     {
         output = "You have access to the following commands:<br>" +
@@ -185,6 +196,17 @@ function getCommand(text)
                     "&nbspgithub - view my GitHub Link<br>" + 
                     "&nbspcontact - display my contact information<br>" +
                     "<br>";
+    }
+    else if (text.toLowerCase().startsWith("github"))
+    {
+        output = "<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
+                    "My GitHub Profile</a><br><br>"
+    }
+    else if (text.toLowerCase().startsWith("contact"))
+    {
+        output = "email - christopherpaulperkins@gmail.com<br>" + 
+                 "phone number - (352)459-9716<br>" + 
+                 "<i>&nbspIf not discussed prior, please email instead of calling.</i><br><br>"
     }
     // Do nothing.
     else if (text === "")
@@ -197,9 +219,14 @@ function getCommand(text)
                  "Enter 'help' to view a list of available commands.<br><br>";
     }
 
-    printToTerminal(whiteSpanBegin + output + whiteSpanEnd);
+    document.getElementById("terminal").innerHTML += "<span id={0} style='color:white'></span>".format(curID);
+    printToElement(output, curID);
+
+    // Increment curID
+    curID += 1
 }
 
+// Load non-standard javascript functions
 function loadFunctions()
 {
     // Create .format method
