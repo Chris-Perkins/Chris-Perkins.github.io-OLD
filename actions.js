@@ -1,5 +1,5 @@
 const loc = "chrisperkins:~$ ";
-const ver = "1.1.1";
+const ver = "1.1.2";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -65,15 +65,24 @@ const Commands =
     "contact": new Command(function()
         {
             printToElementWithID("email - christopherpaulperkins@gmail.com<br>" + 
-                        "phone number - (352)459-9716<br>" + 
-                        "<span style='color:{0}'>".format(yellow) + 
-                        "Note: I may not respond to phone calls as I may be in class or at work." + 
-                        "<br><br></span>", curID);
+                                 "phone number - (352)459-9716<br>" + 
+                                 "<span style='color:{0}'>".format(yellow) + 
+                                 "Note: I may not respond to phone calls as I may be in class or at work." + 
+                                 "<br><br></span>", curID);
 
                 printInputLine();
                 
                 curID += 1;
         }, "Displays my contact information"),
+
+    "clean": new Command(function()
+        {
+            printToElementWithID("Cookies have been cleaned!<br><br>", curID);
+
+            localStorage.clear();
+            printInputLine();
+            curID += 1;
+        }, "cleans saved cookies"),
 
     "github": new Command(function()
         {
@@ -188,7 +197,7 @@ function launchSequence()
             {
                 curID += 1;
 
-                typeWriter(" ...", "color:{0}".format(yellow), 
+                typeWriter("  ...", "color:{0}".format(red), 
                 function()
                 {
                     curID += 1;
@@ -202,7 +211,7 @@ function launchSequence()
                                        "color:{0}".format(red), function(){printInputLine();curID+=1;});
                         }, 100) 
                 }, 1000)
-            }, timeConstant);
+            }, 15);
 
         localStorage.visitCount += 1;
     }
