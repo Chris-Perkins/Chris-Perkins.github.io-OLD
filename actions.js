@@ -1,7 +1,8 @@
 const loc = "chrisperkins:~$ ";
-const ver = "1.1.0";
+const ver = "1.1.1";
 //global colors
-const yellow = "#f2ef48";
+const green = "#50e077";
+const yellow = "#ede671";
 const white = "white";
 const red = "#ff5b5b"
 terminal = null;
@@ -13,99 +14,115 @@ timeConstant = 30;
 var time = 0
 var curID = 0;
 
+// All commands have a function and description
 class Command 
 {
-    constructor(action, func)
+    constructor(action, description)
     {
         this.action = function()
             {
                 terminal.innerHTML += "<span id={0} style='color:{1}'></span>".format(curID, white);
                 
-                prevID = curID;
-                curID += 1;
-                
                 action();
             }
         this.description = description;
     }
-    run(args)
-    {
-        this.func(args);
-    }
 }
+
+// Valid user commands
 const Commands = 
 {
-    /*"help": new Command(function() 
-    {
-        for(command in Commands)
+    "help": new Command(function() 
         {
-            printToElementWithID("{0} - {1}".format(command, Commands[command].description));
-        }
+            for(command in Commands)
+            {
+                printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
+                                        yellow, command, Commands[command].description), curID);
+            }
+            printToElementWithID("<br>", curID);
 
-        printInputLine();
-    },
-    "Displays all commands and their descriptions"),
+            printInputLine();
+            curID += 1;
+        }, "Displays all commands and their descriptions"),
 
     "about": new Command(function()
         {
-            printToElementWithID("ABOUT THE AUTHOR:<br>" + 
-                                 "-----------------", curID);
+            printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
+                                 "ADMIN'S AUTOBIOGRAPHY:<br>" + 
+                                 "----------------------<br>" + 
+                                 "</span>", curID);
             typeWriter("Firstly, thank you for your interest! It means a lot. :)<br><br>" + 
-                    "I'm a junior computer science student at the University of Central Florida,<br>" + 
-                    "and I have a passion for creative, efficient, and simple solutions.<br><br>" + 
-                    "In the next year, I plan to accomplish the following:<br><br>" + 
-                    "Complete:<br>" + 
-                    "Learn Python<br>" + 
-                    "Learn about Hybrid and Native mobile Development<br>" + 
-                    "Learn about SalesForce<br>" + 
-                    "Participate in my first hackathon<br>" +
-                    "<br>" + 
-                    "In Progress:<br>" + 
-                    "Complete 800 CodeForces Problems (300/800)<br>" + 
-                    "Complete the Coursera Machine Learning Course<br>" +
-                    "<br>" + 
-                    "To-Do:<br>" + 
-                    "Complete the Coursera Algorithms I Course<br>" + 
-                    "Complete the Stanford Databases Course<br>" + 
-                    "Join the UCF Programming Team<br>" + 
-                    "<br>" + 
-                    "All of my work so far has been based in Orlando, Florida.<br>" + 
-                    "Despite this fact, I'm open to all options that are based in the United States.<br>" + 
-                    "I'm particularly looking for opportunities that would allow me to learn from and " + 
-                    "contribute to a team's operations in a meaningful way.<br><br>"
-                    , "color:{0}".format(white), printInputLine);
-        },
-        "Tells you a little bit about me"),
+                        "I am a junior computer science student at the University of Central Florida,<br>" + 
+                        "and I have a passion for creative, efficient, and simple solutions.<br><br>" + 
+                        "You can enter the command 'goals' to view my Computer Science goals for the year.<br><br>" + 
+                        "All of my work so far has been based in Orlando, Florida.<br>" + 
+                        "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
+                        "I am particularly interested in opportunities that would allow me to learn from and " + 
+                        "contribute to a team's operations in a meaningful way.<br><br>"  
+                        , "color:{0}".format(white), function(){printInputLine();curID += 1;});
+        }, "Tells you a little bit about me"),
 
     "contact": new Command(function()
         {
             printToElementWithID("email - christopherpaulperkins@gmail.com<br>" + 
-                        "phone number - (352)459-9716<br>", prevID);
-        
-            typeWriter("Note: I may not respond to phone calls as I may be in class or at work.<br><br>", 
-                        "color:{0};font-style:italic".format(yellow), printInputLine);
+                        "phone number - (352)459-9716<br>" + 
+                        "<span style='color:{0}'>".format(yellow) + 
+                        "Note: I may not respond to phone calls as I may be in class or at work." + 
+                        "<br><br></span>", curID);
+
+                printInputLine();
+                
+                curID += 1;
         }, "Displays my contact information"),
 
     "github": new Command(function()
         {
             printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
-                        "My GitHub Profile</a><br><br>", prevID);
+                        "My GitHub Profile</a><br><br>", curID);
 
             printInputLine();
+            curID += 1;
         }, 
         "Displays a clickable link to my GitHub account"),
+    
+    "goals": new Command(function()
+        {
+            printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
+                                 "ADMIN MISSION LOG<br>" + 
+                                 "-----------------<br>" + 
+                                 "</span>", curID);
+            curID += 1;
+            typeWriter("Complete:<br>" + 
+                        "Learn Python<br>" + 
+                        "Learn about Hybrid and Native mobile Development<br>" + 
+                        "Learn about SalesForce<br>" + 
+                        "Participate in my first hackathon<br>" +
+                        "<br>" + 
+                        "In Progress:<br>" + 
+                        "Complete 800 CodeForces Problems (300/800)<br>" + 
+                        "Complete the Coursera Machine Learning Course<br>" +
+                        "<br>" + 
+                        "To-Do:<br>" + 
+                        "Complete the Coursera Algorithms I Course<br>" + 
+                        "Complete the Stanford Databases Course<br>" + 
+                        "Join the UCF Programming Team<br><br>", 
+                        "color:{0}".format(white), function(){printInputLine();curID += 1;})
+        }, "My goals for the year"),
         
     "resume": new Command(function()
         {
             printToElementWithID("<a href='' target='_blank'>" + 
-                        "My Resume</a><br><br>", prevID);
+                                 "My Resume</a><br><br>", curID);
+            
             printInputLine();
-        }, 
-        "Displays a clickable link to my resume (not yet active)")*/
+            curID += 1;
+        }, "Displays a clickable link to my resume (not yet active)")
 }
 
+// Get the command given the commandID
 function getCommand(commandID)
 {
+    commandID = commandID.toLowerCase();
     // Do nothing on empty input
     if (commandID === "")
     {
@@ -114,12 +131,10 @@ function getCommand(commandID)
     else if (typeof Commands[commandID] === "undefined")
     {
         terminal.innerHTML += "<span id={0} style='color:{1}'></span>".format(curID, white);
-        
-        prevID = curID;
-        curID += 1;
         printToElementWithID("'{0}' is not a valid command.<br>".format(commandID) + 
-                             " Enter 'help' to view a list of available commands.<br><br>", prevID);
+                             " Enter 'help' to view a list of available commands.<br><br>", curID);
         printInputLine()
+        curID += 1;
     }
     else
     {
@@ -131,11 +146,15 @@ function getCommand(commandID)
 window.onload = function ()
 {
     terminal = document.getElementById("terminal");
+    
+    // Load external function
     loadFunctions();
     // Prevent paste
     terminal.addEventListener("paste", handlePaste);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
+
+    // Start launch sequence
     launchSequence();
 }
 
@@ -143,16 +162,50 @@ window.onload = function ()
 function launchSequence()
 {
     printToElementWithID("<span style='color:{0}'>".format(white) + 
-                    "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
-                    "</span>", "terminal");
+                         "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
+                         "</span>", "terminal");
 
-    typeWriter("ADMIN: CHRISTOPHER PERKINS<br>" + 
-                "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br><br>" +
-                "MISSION STATEMENT:<br>" + 
-                "Beauty lies in an overarching simplicity;<br>" + 
-                "The best code makes complex ideas simple.<br>" + 
-                "Code should say and do more with less.<br><br>" + 
-                "Enter 'help' to get started.<br><br>", "color:{0}".format(yellow), printInputLine);
+    if(!localStorage.visitCount)
+    {
+        typeWriter("ADMIN: CHRISTOPHER PERKINS<br>" + 
+                   "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br><br>" +
+                   "MISSION STATEMENT:<br>" + 
+                   "Beauty lies in an overarching simplicity;<br>" + 
+                   "The best code makes complex ideas simple.<br>" + 
+                   "Code should say and do more with less.<br><br>" + 
+                   "Enter 'help' to get started.<br><br>", "color:{0}".format(yellow), 
+                   function(){printInputLine();curID+=1;});
+
+        localStorage.visitCount = 1;
+    }
+    else
+    {
+        typeWriter("ADMIN: CHRISTOPHER PERKINS<br>" + 
+            "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br><br>" +
+            "MISSION STATEMENT:<br>" + 
+            "Beauty lies in an ove-<br>", "color:{0}".format(yellow), 
+            function()
+            {
+                curID += 1;
+
+                typeWriter(" ...", "color:{0}".format(yellow), 
+                function()
+                {
+                    curID += 1;
+
+                    typeWriter("<br> Oh. You've been here before.<br>", "color:{0}".format(red), function()
+                        {
+                            curID += 1;
+
+                            typeWriter("Why not get in touch with me? Type 'contact' to view my contact details.<br><br>" + 
+                                       "Otherwise, type 'help' to view all available commands.<br><br>",
+                                       "color:{0}".format(red), function(){printInputLine();curID+=1;});
+                        }, 100) 
+                }, 1000)
+            }, timeConstant);
+
+        localStorage.visitCount += 1;
+    }
 }
 
 // Add "htmlString" to element with id "id"
@@ -162,27 +215,21 @@ function printToElementWithID(htmlString, id)
 }
 
 // Custom type writer function
-function typeWriter(text, style, endFunction)
+function typeWriter(text, style, endFunction, inTime)
 {
     // Set time to timeContant (last dialogue may have been skipped)
-    time = timeConstant;
+    time = inTime || timeConstant;
     // Create a new element
     printToElementWithID("<span id='{0}' style='{1}'></span>".format(curID, style), "terminal");
     
-    typeWriterHelper(text, 0, "", curID, function()
-                                        {
-                                            endFunction();
-                                            curID += 1;
-                                        });
-    
-    // Scrolls to the element the type writer is typing to.
-    document.getElementById(curID).scrollIntoView(true);
+    typeWriterHelper(text, 0, "", curID, endFunction);
 }
 
 // Type writer function helper
 // Prints text recursively at a set timer
 // Parses out single tag html and adds to innerhtml separately.
-function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
+// "<", ">"" define an html bracket
+function typeWriterHelper(text, n, currentSavedString, id, endFunction)
 {
     // Possibility of <br> string, scroll
     document.getElementById(curID).scrollIntoView(true);
@@ -195,8 +242,8 @@ function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
     if (n === text.length || time === 0)
     {
         // Print remaining string if skipped
-        printToElementWithID(currentHTMLString + text.substr(n), id);
-
+        printToElementWithID(currentSavedString + text.substr(n), id);
+        
         endFunction();
 
         return;
@@ -204,12 +251,12 @@ function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
     else
     {
         // If not an html tag
-        if (currentHTMLString == "")
+        if (currentSavedString == "")
         {
             // If start of tag
             if (text[n] == "<")
             {
-                currentHTMLString += text[n];
+                currentSavedString += text[n];
             }
             else
             {
@@ -218,19 +265,19 @@ function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
         }
         else
         {
-            currentHTMLString += text[n];
+            currentSavedString += text[n];
             
             // If close an html string
             if (text[n] == ">")
             {
-                printToElementWithID(currentHTMLString, id);
-                currentHTMLString = ""
-                extraTimeOut = 200;
+                printToElementWithID(currentSavedString, id);
+                currentSavedString = ""
+                extraTimeOut = 400;
             }
         }
         setTimeout(function()
         {
-            typeWriterHelper(text, n + 1, currentHTMLString, id, endFunction)
+            typeWriterHelper(text, n + 1, currentSavedString, id, endFunction)
         }, time + extraTimeOut);
     }
 }
@@ -239,7 +286,7 @@ function typeWriterHelper(text, n, currentHTMLString, id, endFunction)
 function printInputLine()
 {
     // Terminal line
-    terminal.innerHTML += "<span style='color:#50e077'>{0}</span>".format(loc)
+    terminal.innerHTML += "<span style='color:{0}'>{1}</span>".format(green, loc)
     printToElementWithID("<span id='input' contenteditable='true'></span>", "terminal");//editable text
 
     document.getElementById("input").scrollIntoView(true);
@@ -252,12 +299,6 @@ function handlePaste (e)
     // Stop data being directly pasted into div
     e.stopPropagation();
     e.preventDefault();
-}
-
-// Focus on input line
-function focusInput()
-{
-    document.getElementById("input").focus();
 }
 
 // Focuses input area if it exists
@@ -293,6 +334,12 @@ function keyCheck(e)
     {
         time = 0;
     }
+}
+
+// Focus on input line
+function focusInput()
+{
+    document.getElementById("input").focus();
 }
 
 // Place the input caret to the end of input
