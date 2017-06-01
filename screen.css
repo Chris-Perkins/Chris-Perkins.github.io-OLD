@@ -1,0 +1,46 @@
+#screen
+{
+  width:95%;
+  height:95%;
+
+  left: 2.5%;
+  top: 2%;
+
+  position:fixed;
+  overflow:hidden;
+  border:2px solid #666;
+}
+
+#screen::before
+{
+  content: "";
+  position: fixed;
+  width: 95%;
+  height: 95%;
+
+  left: 2.5%;
+  top: 2%;
+
+  background: linear-gradient(rgba(18, 16, 16, 0.2) 50%,
+                            rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, 
+                            rgba(255, 0, 0, 0.08), rgba(0, 255, 0, 0.05), 
+                            rgba(0, 0, 255, 0.08));
+  z-index: 10;
+  background-size: 100% 2px, 3px 100%;
+  opacity: 0.5;
+  pointer-events: none;
+ }
+ 
+#screen::after
+{
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.15);
+  opacity: 0;
+  z-index: 10;
+  pointer-events: none;
+}
