@@ -1,5 +1,5 @@
 const loc = "chrisperkins:~$ ";
-const ver = "2.1.1";
+const ver = "3.0.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -158,7 +158,7 @@ const Commands =
         
     "resume": new Command(function()
         {
-            printToElementWithID("<a href='' target='_blank'>" + 
+            printToElementWithID("<a href='resume.html' target='_blank'>" + 
                                  "My Resume</a><br><br>", curID);
             
             printInputLine();
@@ -213,7 +213,7 @@ function launchSequence()
                          "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
                          "</span>", "terminal");
 
-    if(!localStorage.visitCount)
+    if(!localStorage || !localStorage.visitCount)
     {
         typeWriter([{
                      "text": 
@@ -245,8 +245,11 @@ function launchSequence()
                             "color:{0}".format(white)
                     }], 
                    function(){curID+=1;printInputLine();});
-
-        localStorage.visitCount = 1;
+        
+        if (localStorage)
+        {
+            localStorage.visitCount = 1;
+        }
     }
     else
     {

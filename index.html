@@ -6,6 +6,15 @@
 <link rel="stylesheet" type="text/css" href="screen.css">
 <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
+<script>
+  // Redirect to different version if on IE
+  if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) ||
+      navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
+  {
+    window.location.href="ie.html";
+  }
+</script>
+
 <html>
   <head>
     <title>Christopher Perkins</title>
