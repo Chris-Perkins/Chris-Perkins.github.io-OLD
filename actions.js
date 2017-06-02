@@ -1,10 +1,10 @@
 const loc = "chrisperkins:~$ ";
-const ver = "2.0.0";
+const ver = "2.1.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
 const white = "white";
-const red = "#ff5b5b"
+const red = "#ff5b5b";
 // Typewriter speed if not defined
 const timeConstant = 30;
 
@@ -12,12 +12,12 @@ const timeConstant = 30;
 const actionKeycodes = [27, 16, 17, 18, 20, 144,
                         37, 38, 39, 40, 112, 113, 114,
                         115, 116, 117, 118, 119, 120,
-                        121, 122, 123, 224, 91]
+                        121, 122, 123, 224, 91];
 
 terminal = null;
 
 // Current speed for typewriter
-var time = 0
+var time = 0;
 var curID = 0;
 var overrideTypeWriter = false;
 
@@ -28,7 +28,8 @@ class Command
     {
         this.action = function()
             {
-                printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white), "terminal");
+                printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                     "terminal");
                 
                 action();
             }
@@ -58,31 +59,37 @@ const Commands =
                                  "ADMIN'S AUTOBIOGRAPHY:<br>" + 
                                  "----------------------<br>" + 
                                  "</span>", curID);
-            typeWriter([{"text": 
-                            "Firstly, thank you for your interest! It means a lot. :)<br><br>" + 
-                            "I am a junior computer science student at the University of Central Florida,<br>" + 
-                            "and I have a passion for creative, efficient, and simple solutions.<br><br>" + 
-                            "You can enter the command 'goals' to view my Computer Science goals for the year.<br><br>" + 
-                            "All of my work so far has been based in Orlando, Florida.<br>" + 
-                            "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
-                            "I am particularly interested in opportunities that would allow me to learn from and " + 
-                            "contribute to a team's operations in a meaningful way.<br><br>",  
-                        "style": 
-                            "color:{0}".format(white)}],
+            typeWriter([{
+                            "text": 
+                                "Firstly, thank you for your interest! It means a lot. :)<br><br>" + 
+                                "I am a junior computer science student at the University of Central Florida,<br>" + 
+                                "and I have a passion for creative, efficient, and simple solutions.<br><br>",
+                            "style": 
+                                "color:{0}".format(white)
+                        },
+                        {
+                            "text":
+                                "I also like breaking things...",
+                            "style":
+                                "color:{0}".format(red),
+                            "time":
+                                150
+                        },
+                        {
+                            "text":
+                                "<br>In a good way!<br>" +
+                                "When put on a project, I first break it to figure it out.<br><br>" + 
+                                "I heavily enjoy learning and fast-spaced environments, as I like constant work.<br>" +
+                                "As long as I know that the work I'm doing is for a good purpose, I could code for days.<br><br>" + 
+                                "All of my work so far has been based in Orlando, Florida.<br>" + 
+                                "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
+                                "I am particularly interested in opportunities that would allow me to learn from and " + 
+                                "contribute to a team's operations in a meaningful way.<br><br>",
+                            "style":
+                                "color:{0}".format(white)
+                        }],
                         function(){curID+=1;printInputLine();});
         }, "Tells you a little bit about me"),
-
-    "contact": new Command(function()
-        {
-            printToElementWithID("email - christopherpaulperkins@gmail.com<br>" + 
-                                 "phone number - (352)459-9716<br>" + 
-                                 "<span style='color:{0}'>".format(yellow) + 
-                                 "Note: I may not respond to phone calls as I may be in class or at work." + 
-                                 "<br><br></span>", curID);
-                
-                curID += 1;
-                printInputLine();
-        }, "Displays my contact information"),
 
     "clean": new Command(function()
         {
@@ -92,6 +99,18 @@ const Commands =
             curID += 1;
             printInputLine();
         }, "cleans saved cookies"),
+
+    "contact": new Command(function()
+        {
+            printToElementWithID("email - christopherpaulperkins@gmail.com<br>" + 
+                                 "phone number - (352)459-9716<br>" + 
+                                 "<span style='color:{0}'>".format(yellow) + 
+                                 "Note: I may not respond to phone calls as I don't answer at class or at work." + 
+                                 "<br><br></span>", curID);
+                
+                curID += 1;
+                printInputLine();
+        }, "Displays my contact information"),
 
     "github": new Command(function()
         {
@@ -114,18 +133,19 @@ const Commands =
             typeWriter([{"text": 
                             "Complete:<br>" + 
                             "Learn Python<br>" + 
-                            "Learn about Hybrid and Native mobile Development<br>" + 
+                            "Learn about hybrid and native mobile development<br>" + 
                             "Learn about SalesForce<br>" + 
                             "Participate in my first hackathon<br>" +
                             "<br>" + 
                             "In Progress:<br>" + 
-                            "Complete 800 CodeForces Problems (300/800)<br>" + 
-                            "Complete the Coursera Machine Learning Course<br>" +
+                            "Complete 800 Codeforces problems (350+/800)<br>" + 
+                            "Complete Coursera's machine learning course<br>" +
+                            "'Spot my New Song' project<br>" + 
                             "<br>" + 
                             "To-Do:<br>" + 
-                            "Complete the Coursera Algorithms I Course<br>" + 
-                            "Complete the Stanford Databases Course<br>" + 
-                            "Join the UCF Programming Team<br><br>", 
+                            "Complete Coursera's Algorithms I course<br>" + 
+                            "Complete Stanford's Databases course<br>" + 
+                            "Join the UCF programming team<br><br>", 
                         "style": "color:{0}".format(white)}], 
                         function(){printInputLine();curID+=1;})
         }, "My goals for the year"),
@@ -152,9 +172,10 @@ function getCommand(commandID)
     else if (typeof Commands[commandID] === "undefined")
     {
         terminal.innerHTML += "<span id={0} style='color:{1}'></span>".format(curID, white);
-        printToElementWithID("'{0}' is not a valid command.<br>".format(commandID) + 
-                             " Enter 'help' to view a list of available commands.<br><br>", curID);
-        printInputLine()
+        printToElementWithID("'{0}' is not a valid command.<br> ".format(commandID) + 
+                             "Enter '<span style='color:{0}'>help</span>' ".format(yellow) +
+                             "to view a list of available commands.<br><br>", curID);
+        printInputLine();
         curID += 1;
     }
     else
@@ -195,10 +216,27 @@ function launchSequence()
                         "MISSION STATEMENT:<br>" + 
                         "Beauty lies in an overarching simplicity;<br>" + 
                         "The best code makes complex ideas simple.<br>" + 
-                        "Code should say and do more with less.<br><br>" + 
-                        "Enter 'help' to get started.<br><br>", 
+                        "Code should say and do more with less.<br><br>", 
                      "style": 
                         "color:{0}".format(yellow)
+                    },
+                    {
+                        "text":
+                            "Enter '",
+                        "style":
+                            "color:{0}".format(white)
+                    },
+                    {
+                        "text":
+                            "help",
+                        "style":
+                            "color:{0}".format(yellow)
+                    },
+                    {
+                        "text":
+                            "' to get started.<br><br>",
+                        "style":
+                            "color:{0}".format(white)
                     }], 
                    function(){curID+=1;printInputLine();});
 
@@ -215,21 +253,24 @@ function launchSequence()
                             "Beauty lies in an ove-<br><br>", 
                         "style": 
                             "color:{0}".format(yellow),
-                        "time": 10
+                        "time": 
+                            10
                     },
                     {
                         "text": 
                             " ...",
                             "style": 
                             "color:{0}".format(red),
-                        "time": 1000
+                        "time": 
+                            1000
                     },
                     {
                         "text": 
                             "<br> Oh. You've been here before.",
                         "style": 
                             "color:{0}".format(red),
-                        "time": 100
+                        "time": 
+                            100
                     },
                     {
                         "text": 
@@ -297,7 +338,8 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
     // On first strIndex, create our span and set time
     if (strIndex == 0)
     {
-        printToElementWithID("<span id={0} style='{1}'></span>".format(id, printArray[arrayIndex]["style"]), "terminal")
+        printToElementWithID("<span id={0} style='{1}'>".format(id, printArray[arrayIndex]["style"]) +
+                             "</span>", "terminal");
         curID += 1;
         
         time = printArray[arrayIndex]["time"]||timeConstant;
@@ -316,6 +358,8 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         printToElementWithID(currentSavedString + printArray[arrayIndex]["text"].substr(strIndex), id);
 
         typeWriterHelper(printArray, arrayIndex + 1, 0, "", curID, endFunction);
+
+        return;
     }
     else
     {
@@ -347,6 +391,8 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         {
             typeWriterHelper(printArray, arrayIndex, strIndex + 1, currentSavedString, id, endFunction)
         }, time + extraTimeOut);
+
+        return;
     }
 }
 
