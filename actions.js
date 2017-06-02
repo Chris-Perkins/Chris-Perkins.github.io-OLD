@@ -1,5 +1,5 @@
 const loc = "chrisperkins:~$ ";
-const ver = "3.0.0";
+const ver = "3.1.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -7,6 +7,8 @@ const white = "white";
 const red = "#ff5b5b";
 // Typewriter speed if not defined
 const timeConstant = 30;
+// Whether we have LocalStorage permissions
+const localStorageAccess = determineLocalStorageAccess();
 
 // action keys (ctrl, shift, command, num lock... etc)
 const actionKeycodes = [27, 16, 17, 18, 20, 144,
@@ -93,7 +95,7 @@ const Commands =
 
     "clean": new Command(function()
         {
-            if(localStorage)
+            if(localStorageAccess)
             {
                 localStorage.clear();
                 printToElementWithID("Cookies have been cleaned!<br><br>", curID);
@@ -135,7 +137,6 @@ const Commands =
                                  "ADMIN MISSION LOG<br>" + 
                                  "-----------------<br>" + 
                                  "</span>", curID);
-            curID += 1;
             typeWriter([{"text": 
                             "Complete:<br>" + 
                             "Learn Python<br>" + 
@@ -163,7 +164,50 @@ const Commands =
             
             printInputLine();
             curID += 1;
-        }, "Displays a clickable link to my resume (not yet active)")
+        }, "Displays a clickable link to my resume (not yet active)"),
+    "skills": new Command(function()
+        {
+            printToElementWithID("<span style='color:{0}'>".format(yellow) +
+                                 "CORE SKILLS:<br>" + 
+                                 "------------<br>" + 
+                                 "</span>", curID);
+
+            typeWriter([
+                {
+                    "text":
+                        "Languages:<br>" + 
+                        "----------<br>",
+                    "style":
+                        "color:{0}".format(white)
+                },
+                {
+                    "text":
+                        "Python Java C C++ C# " +
+                        "Objective-C Swift SQL " +
+                        "Javascript HTML CSS",
+                    "style":
+                        "color:{0};word-spacing:10px".format(white),
+                    "time":
+                        timeConstant * 2
+                },
+                {
+                    "text":
+                        "<br><br>" + 
+                        "Tools:<br>" + 
+                        "------<br>",
+                    "style":
+                        "color:{0}".format(white)
+                },
+                {
+                    "text":
+                        "Git AccuRev XCode Android Studio " + 
+                        "Unity Angular.js Node.js Cordova<br><br>",
+                    "style":
+                        "color:{0};word-spacing:10px".format(white),
+                    "time":
+                        timeConstant * 2
+                }], function(){printInputLine();curID+=1})
+        }, "Displays a list of my core skills")
 }
 
 // Get the command given the commandID
@@ -194,7 +238,7 @@ function getCommand(commandID)
 window.onload = function ()
 {
     terminal = document.getElementById("terminal");
-    
+    terminal.innerHTML = "";
     // Load external function
     loadFunctions();
     // Prevent paste
@@ -213,7 +257,7 @@ function launchSequence()
                          "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
                          "</span>", "terminal");
 
-    if(!localStorage || !localStorage.visitCount)
+    if(!localStorageAccess || !localStorage.visitCount)
     {
         typeWriter([{
                      "text": 
@@ -246,7 +290,7 @@ function launchSequence()
                     }], 
                    function(){curID+=1;printInputLine();});
         
-        if (localStorage)
+        if (localStorageAccess)
         {
             localStorage.visitCount = 1;
         }
@@ -316,6 +360,18 @@ function launchSequence()
                     function(){curID+=1;printInputLine();});
 
         localStorage.visitCount += 1;
+    }
+}
+
+function determineLocalStorageAccess()
+{
+    var mod = "test";
+    try {
+        localStorage.setItem(mod, mod);
+        localStorage.removeItem(mod);
+        return true;
+    } catch(e) {
+        return false;
     }
 }
 
