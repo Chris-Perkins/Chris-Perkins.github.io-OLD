@@ -1,24 +1,26 @@
 #screen
 {
-  width:95%;
-  height:95%;
+  height: 95%;
 
   left: 2.5%;
+  right: 2.5%;
   top: 2%;
 
-  position:fixed;
-  overflow:hidden;
+  position: fixed;
+  overflow: hidden;
   border:2px solid #666;
+
+  word-wrap: break-word;
 }
 
 #screen::before
 {
   content: "";
   position: fixed;
-  width: 95%;
   height: 95%;
 
   left: 2.5%;
+  right: 2.5%;
   top: 2%;
 
   background: linear-gradient(rgba(18, 16, 16, 0.2) 50%,

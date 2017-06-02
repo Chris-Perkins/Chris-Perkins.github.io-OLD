@@ -1,5 +1,5 @@
 const loc = "chrisperkins:~$ ";
-const ver = "2.1.0";
+const ver = "2.1.1";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -79,7 +79,7 @@ const Commands =
                             "text":
                                 "<br>In a good way!<br>" +
                                 "When put on a project, I first break it to figure it out.<br><br>" + 
-                                "I heavily enjoy learning and fast-spaced environments, as I like constant work.<br>" +
+                                "I heavily enjoy learning and fast-spaced environments as I like constant work.<br>" +
                                 "As long as I know that the work I'm doing is for a good purpose, I could code for days.<br><br>" + 
                                 "All of my work so far has been based in Orlando, Florida.<br>" + 
                                 "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
@@ -93,9 +93,15 @@ const Commands =
 
     "clean": new Command(function()
         {
-            printToElementWithID("Cookies have been cleaned!<br><br>", curID);
-
-            localStorage.clear();
+            if(localStorage)
+            {
+                localStorage.clear();
+                printToElementWithID("Cookies have been cleaned!<br><br>", curID);
+            }
+            else
+            {
+                printToElementWithID("There are no cookies to clean.<br><br>", curID);
+            }
             curID += 1;
             printInputLine();
         }, "cleans saved cookies"),
@@ -275,7 +281,7 @@ function launchSequence()
                     {
                         "text": 
                             "<br><br>Why not get in touch with me?<br>" + 
-                            "Type '",
+                            "Enter '",
                         "style":
                             "color:{0}".format(white)
                     },
@@ -286,8 +292,9 @@ function launchSequence()
                             "color:{0}".format(yellow)
                     },
                     {
-                        "text": "' to view my contact details.<br>" + 
-                            "Otherwise, type '",
+                        "text": 
+                            "' to view my contact details,<br>" + 
+                            "or enter '",
                       "style":
                             "color:{0}".format(white)
                     },
@@ -345,7 +352,8 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         time = printArray[arrayIndex]["time"]||timeConstant;
     }
 
-    document.getElementById(id).scrollIntoView(true);
+    var objDiv = document.getElementById("terminal");
+    objDiv.scrollTop = objDiv.scrollHeight;
 
     // extra time-out used on html tag end
     extraTimeOut = 0;
