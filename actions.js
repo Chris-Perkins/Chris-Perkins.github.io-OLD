@@ -9,19 +9,17 @@ const red = "#ff5b5b";
 const timeConstant = 30;
 // Whether we have LocalStorage permissions
 const localStorageAccess = determineLocalStorageAccess();
-
 // action keys (ctrl, shift, command, num lock... etc)
 const actionKeycodes = [27, 16, 17, 18, 20, 144,
                         37, 38, 39, 40, 112, 113, 114,
                         115, 116, 117, 118, 119, 120,
                         121, 122, 123, 224, 91];
-
-terminal = null;
-
 // Current speed for typewriter
 var time = 0;
 var curID = 0;
 var overrideTypeWriter = false;
+
+terminal = null;
 
 // All commands have a function and description
 class Command 
@@ -64,7 +62,7 @@ const Commands =
             typeWriter([{
                             "text": 
                                 "Firstly, thank you for your interest! It means a lot. :)<br><br>" + 
-                                "I am a junior computer science student at the University of Central Florida,<br>" + 
+                                "I am a junior computer science student at the University of Central Florida,<br>" +
                                 "and I have a passion for creative, efficient, and simple solutions.<br><br>",
                             "style": 
                                 "color:{0}".format(white)
@@ -80,9 +78,9 @@ const Commands =
                         {
                             "text":
                                 "<br>In a good way!<br>" +
-                                "When put on a project, I first break it to figure it out.<br><br>" + 
+                                "When put on a project, I first break everything to figure it out.<br><br>" + 
                                 "I heavily enjoy learning and fast-spaced environments as I like constant work.<br>" +
-                                "As long as I know that the work I'm doing is for a good purpose, I could code for days.<br><br>" + 
+                                "As long as the work is for a good purpose, I could code for days.<br><br>" +
                                 "All of my work so far has been based in Orlando, Florida.<br>" + 
                                 "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
                                 "I am particularly interested in opportunities that would allow me to learn from and " + 
@@ -110,8 +108,8 @@ const Commands =
 
     "contact": new Command(function()
         {
-            printToElementWithID("email - christopherpaulperkins@gmail.com<br>" + 
-                                 "phone number - (352)459-9716<br>" + 
+            printToElementWithID("email - christopherpaulperkins@gmail.com<br>" +
+                                 "phone number - (352)459-9716<br>" +  
                                  "<span style='color:{0}'>".format(yellow) + 
                                  "Note: I may not respond to phone calls as I don't answer at class or at work." + 
                                  "<br><br></span>", curID);
@@ -123,7 +121,7 @@ const Commands =
     "github": new Command(function()
         {
             printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
-                        "My GitHub Profile</a><br><br>", curID);
+                                 "My GitHub Profile</a><br><br>", curID);
 
             curID += 1;
             printInputLine();
@@ -214,7 +212,7 @@ const Commands =
 function getCommand(commandID)
 {
     commandID = commandID.toLowerCase();
-    // Do nothing on empty input
+    // Do nothing on empty input to replicate terminal behavior
     if (commandID === "")
     {
         printInputLine();
@@ -234,7 +232,7 @@ function getCommand(commandID)
     }
 }
 
-// When the document opens
+// Entry-point
 window.onload = function ()
 {
     terminal = document.getElementById("terminal");
@@ -323,7 +321,7 @@ function launchSequence()
                         "style": 
                             "color:{0}".format(red),
                         "time": 
-                            100
+                            75
                     },
                     {
                         "text": 
@@ -363,6 +361,7 @@ function launchSequence()
     }
 }
 
+// Determine if we have access to localstorage
 function determineLocalStorageAccess()
 {
     var mod = "test";
@@ -387,14 +386,12 @@ function typeWriter(array, endFunction)
     typeWriterHelper(array, 0, 0, "", curID, endFunction);
 }
 
-// Type writer function helper
-// Prints text recursively at a set timer
-// Parses out single tag html and adds to innerhtml separately.
+// doubly-recursive function to print text in an array
 // "<", ">"" define an html bracket
 function typeWriterHelper(printArray, arrayIndex, strIndex, 
                           currentSavedString, id, endFunction)
 {
-    // Base case: went through all array indices
+    // Base case 1: went through all array indices
     if (arrayIndex == printArray.length)
     {
         endFunction();
@@ -422,8 +419,9 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
     // Alternate case: user skipped dialogue
     if (strIndex === printArray[arrayIndex]["text"].length || overrideTypeWriter)
     {
-        printToElementWithID(currentSavedString + printArray[arrayIndex]["text"].substr(strIndex), id);
-
+        printToElementWithID(currentSavedString + 
+                             printArray[arrayIndex]["text"].substr(strIndex), id);
+        // Move to next array index
         typeWriterHelper(printArray, arrayIndex + 1, 0, "", curID, endFunction);
 
         return;
@@ -456,7 +454,8 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         }
         setTimeout(function()
         {
-            typeWriterHelper(printArray, arrayIndex, strIndex + 1, currentSavedString, id, endFunction)
+            typeWriterHelper(printArray, arrayIndex, strIndex + 1, 
+                             currentSavedString, id, endFunction)
         }, time + extraTimeOut);
 
         return;
@@ -471,18 +470,22 @@ function printInputLine()
 
     // Terminal line
     terminal.innerHTML += "<span style='color:{0}'>{1}</span>".format(green, loc)
-    printToElementWithID("<span id='input' contenteditable='true'></span>", "terminal");//editable text
+    printToElementWithID("<span id='input' contenteditable='true'></span>", 
+                         "terminal");//editable text
 
     document.getElementById("input").scrollIntoView(true);
     focusInput();
 }
 
-// Disallow paste
+// handle paste as plain text
 function handlePaste (e)
 {
     // Stop data being directly pasted into div
-    e.stopPropagation();
     e.preventDefault();
+
+    var text = e.clipboardData.getData("text/plain")
+    // insert text manually
+    document.execCommand("insertHTML", false, text);
 }
 
 // Focuses input area if it exists
