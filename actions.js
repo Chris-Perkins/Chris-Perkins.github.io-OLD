@@ -365,11 +365,14 @@ function launchSequence()
 function determineLocalStorageAccess()
 {
     var mod = "test";
-    try {
+    try
+    {
         localStorage.setItem(mod, mod);
         localStorage.removeItem(mod);
         return true;
-    } catch(e) {
+    }
+    catch(e)
+    {
         return false;
     }
 }
@@ -575,8 +578,10 @@ function loadFunctions()
     }
 
     // Create "startsWith" function to check prefixes
-    if (!String.prototype.startsWith) {
-        String.prototype.startsWith = function(searchString, position){
+    if (!String.prototype.startsWith)
+    {
+        String.prototype.startsWith = function(searchString, position)
+        {
             position = position || 0;
             return this.substr(position, searchString.length) === searchString;
         };
