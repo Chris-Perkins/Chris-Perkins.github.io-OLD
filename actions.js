@@ -1,5 +1,5 @@
-const loc = "chrisperkins:~$ ";
-const ver = "3.1.0";
+const loc = "recruitor@CHRIS:~$ ";
+const ver = "3.2.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -14,6 +14,8 @@ const actionKeycodes = [27, 16, 17, 18, 20, 144,
                         37, 38, 39, 40, 112, 113, 114,
                         115, 116, 117, 118, 119, 120,
                         121, 122, 123, 224, 91];
+// Punctuation marks
+const punctuation = [",", ".", "!", "?", ":", ";"]
 // Current speed for typewriter
 var time = 0;
 var curID = 0;
@@ -79,7 +81,7 @@ const Commands =
                             "text":
                                 "<br>In a good way!<br>" +
                                 "When put on a project, I first break everything to figure it out.<br><br>" + 
-                                "I heavily enjoy learning and fast-spaced environments as I like constant work.<br>" +
+                                "I greatly enjoy learning and fast-spaced environments as I like constant work.<br>" +
                                 "As long as the work is for a good purpose, I could code for days.<br><br>" +
                                 "All of my work so far has been based in Orlando, Florida.<br>" + 
                                 "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
@@ -139,13 +141,13 @@ const Commands =
                             "Complete:<br>" + 
                             "Learn Python<br>" + 
                             "Learn about hybrid and native mobile development<br>" + 
-                            "Learn about SalesForce<br>" + 
                             "Participate in my first hackathon<br>" +
                             "<br>" + 
                             "In Progress:<br>" + 
-                            "Complete 800 Codeforces problems (350+/800)<br>" + 
+                            "Complete 800 Codeforces problems (375+/800)<br>" + 
                             "Complete Coursera's machine learning course<br>" +
                             "'Spot my New Song' project<br>" + 
+                            "'MiddleMan' iOS project<br>" + 
                             "<br>" + 
                             "To-Do:<br>" + 
                             "Complete Coursera's Algorithms I course<br>" + 
@@ -153,7 +155,7 @@ const Commands =
                             "Join the UCF programming team<br><br>", 
                         "style": "color:{0}".format(white)}], 
                         function(){printInputLine();curID+=1;})
-        }, "My goals for the year"),
+        }, "My personal computer-science goals"),
         
     "resume": new Command(function()
         {
@@ -198,7 +200,7 @@ const Commands =
                 },
                 {
                     "text":
-                        "Git AccuRev XCode Android Studio " + 
+                        "Git AccuRev XCode Android_Studio " + 
                         "Unity Angular.js Node.js Cordova<br><br>",
                     "style":
                         "color:{0};word-spacing:10px".format(white),
@@ -440,6 +442,12 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
             }
             else
             {
+                // If we printed a punctuation mark
+                if(punctuation.indexOf(printArray[arrayIndex]["text"][strIndex]) != -1)
+                {
+                    extraTimeOut += 200
+                }
+
                 printToElementWithID(printArray[arrayIndex]["text"][strIndex], id);
             }
         }
@@ -447,11 +455,16 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         {
             currentSavedString += printArray[arrayIndex]["text"][strIndex];
             
+            // Skip timed print while parsing through html bracket
+            extraTimeOut = -time
             // If close an html string
             if (printArray[arrayIndex]["text"][strIndex] == ">")
             {
                 printToElementWithID(currentSavedString, id);
                 currentSavedString = "";
+
+                // On end of html bracket, take extra time
+                // Gives feeling of proper typing on <br>
                 extraTimeOut = time * 15;
             }
         }
