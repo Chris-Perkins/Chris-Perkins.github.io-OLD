@@ -63,9 +63,15 @@ const Commands =
                                  "</span>", curID);
             typeWriter([{
                             "text": 
-                                "Firstly, thank you for your interest! It means a lot. :)<br><br>" + 
+                                "Firstly, thank you for your interest! It means a lot. :)<br>" +
+                                "<br>" +  
                                 "I am a junior computer science student at the University of Central Florida,<br>" +
-                                "and I have a passion for creative, efficient, and simple solutions.<br><br>",
+                                "and I am a member of the Burnett Honors College and admittant to the accelerated BS to MS program.<br>" +
+                                "<br>" +  
+                                "More importantly, I have a passion for creative, efficient, and simple solutions.<br>" + 
+                                "I've recently come to love building applications such as EyeBot, Spot my New Song, or Shadobot.<br>" + 
+                                "These applications can be viewed on my GitHub.<br>" + 
+                                "<br>",
                             "style": 
                                 "color:{0}".format(white)
                         },
@@ -80,13 +86,17 @@ const Commands =
                         {
                             "text":
                                 "<br>In a good way!<br>" +
-                                "When put on a project, I first break everything to figure it out.<br><br>" + 
-                                "I greatly enjoy learning and fast-spaced environments as I like constant work.<br>" +
-                                "As long as the work is for a good purpose, I could code for days.<br><br>" +
+                                "When put on a project, I first like break everything to figure it out.<br>" +
+                                "<br>" +  
+                                "I greatly enjoy learning and fast-paced environments as I like constant work.<br>" +
+                                "As long as the work is for a good purpose, I could code for days.<br>" +
+                                "<br>" + 
                                 "All of my work so far has been based in Orlando, Florida.<br>" + 
-                                "Despite this fact, I'm open to all options that are based in the United States.<br><br>" + 
+                                "Despite this fact, I'm open to all options that are based in the United States.<br>" +
+                                "<br>" +  
                                 "I am particularly interested in opportunities that would allow me to learn from and " + 
-                                "contribute to a team's operations in a meaningful way.<br><br>",
+                                    "contribute to a team's operations in a meaningful way.<br>" +
+                                "<br>",
                             "style":
                                 "color:{0}".format(white)
                         }],
@@ -152,15 +162,15 @@ const Commands =
                             "To-Do:<br>" + 
                             "Complete Coursera's Algorithms I course<br>" + 
                             "Complete Stanford's Databases course<br>" + 
-                            "Join the UCF programming team<br><br>", 
+                            "Join the UCF programming team<br>" + 
+                            "<br>", 
                         "style": "color:{0}".format(white)}], 
                         function(){printInputLine();curID+=1;})
         }, "My personal computer-science goals"),
         
     "resume": new Command(function()
         {
-            printToElementWithID("<a href='resume.html' target='_blank'>" + 
-                                 "My Resume</a><br><br>", curID);
+            printToElementWithID("<a href='resume.html' target='_blank'>My Resume</a><br><br>", curID);
             
             printInputLine();
             curID += 1;
@@ -202,6 +212,21 @@ const Commands =
                     "text":
                         "Git AccuRev XCode Android_Studio " + 
                         "Unity Angular.js Node.js Cordova<br><br>",
+                    "style":
+                        "color:{0};word-spacing:10px".format(white),
+                    "time":
+                        timeConstant * 2
+                },
+                {
+                    "text":
+                        "Miscellaneous Technologies<br>" + 
+                        "--------------------------<br>",
+                    "style":
+                        "color:{0}".format(white)
+                },
+                {
+                    "text":
+                        "PhotoShop After_Effects Illustrator Word PowerPoint Excel Mac Windows<br><br>",
                     "style":
                         "color:{0};word-spacing:10px".format(white),
                     "time":
@@ -262,11 +287,13 @@ function launchSequence()
         typeWriter([{
                      "text": 
                         "ADMIN: CHRISTOPHER PERKINS<br>" + 
-                        "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br><br>" +
+                        "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br>" +
+                        "<br>" + 
                         "MISSION STATEMENT:<br>" + 
                         "Beauty lies in an overarching simplicity;<br>" + 
                         "The best code makes complex ideas simple.<br>" + 
-                        "Code should say and do more with less.<br><br>", 
+                        "Code should say and do more with less.<br>" + 
+                        "<br>", 
                      "style": 
                         "color:{0}".format(yellow)
                     },
@@ -301,9 +328,11 @@ function launchSequence()
                     [{
                         "text": 
                             "ADMIN: CHRISTOPHER PERKINS<br>" + 
-                            "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br><br>" +
+                            "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br>" +
+                            "<br>" + 
                             "MISSION STATEMENT:<br>" + 
-                            "Beauty lies in an ove-<br><br>", 
+                            "Beauty lies in an ove-<br>" + 
+                            "<br>", 
                         "style": 
                             "color:{0}".format(yellow),
                         "time": 
