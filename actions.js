@@ -8,7 +8,7 @@ const red = "#ff5b5b";
 // Typewriter speed if not defined
 const timeConstant = 30;
 // Whether we have LocalStorage permissions
-const localStorageAccess = determineLocalStorageAccess();
+var localStorageAccess = false;
 // action keys (ctrl, shift, command, num lock... etc)
 const actionKeycodes = [27, 16, 17, 18, 20, 144,
                         37, 38, 39, 40, 112, 113, 114,
@@ -18,10 +18,10 @@ const actionKeycodes = [27, 16, 17, 18, 20, 144,
 const punctuation = [",", ".", "!", "?", ":", ";"]
 // Current speed for typewriter
 var time = 0;
-var curID = 0;
+// Skip typewriter
 var overrideTypeWriter = false;
-
-terminal = null;
+var curID = 0;
+var terminal = null;
 
 // All commands have a function and description
 class Command 
@@ -283,6 +283,8 @@ function getCommand(commandID)
 // Entry-point
 window.onload = function ()
 {
+    localStorageAccess = determineLocalStorageAccess();
+
     terminal = document.getElementById("terminal");
     // wipe out html to remove default page that displays if JS could not load
     // If you want to see this page, just load it in internet explorer.
@@ -437,6 +439,7 @@ function launchSequence()
 // Determine if we have access to localstorage
 function determineLocalStorageAccess()
 {
+    var mod = "test"
     try
     {
         localStorage.setItem(mod, mod);
