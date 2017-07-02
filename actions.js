@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.0.1";
+const ver = "4.1.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -298,6 +298,8 @@ window.onload = function ()
     terminal.addEventListener("paste", handlePaste);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
+    // If on mobile, click = skip dialogue
+    document.addEventListener("click", clickMobileHandler);
 
     launchSequence();
 }
@@ -305,8 +307,8 @@ window.onload = function ()
 // Sequence that occurs when user 
 function launchSequence()
 {
-    mobileString = "<span style='color:{0}'>".format(white) + 
-                    "You're on mobile! Please click by the '$' symbol to get started.<br><br>"
+    mobileString = "<span style='color:{0}'>".format(yellow) + 
+                    "You're on a mobile device! Please click by the '$' symbol to get started.<br><br>"
                     "<br><br></span>".format(white)
 
     printToElementWithID("<span style='color:{0}'>".format(white) + 
@@ -623,6 +625,23 @@ function keyCheck(e)
             }
         }
         // If a valid entrypoint does not exist, skip dialogue.
+        else
+        {
+            overrideTypeWriter = true;
+        }
+    }
+}
+
+function clickMobileHandler()
+{
+    if (mobileAndTabletcheck())
+    {
+        inputElement = document.getElementById("input");
+        // If a valid entry point exists, we do not skip.
+        if (inputElement)
+        {
+            focusInput();
+        }
         else
         {
             overrideTypeWriter = true;
