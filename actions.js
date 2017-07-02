@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.0";
+const ver = "4.1.1";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -155,32 +155,57 @@ const Commands =
     
     "goals": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
-                                 "terminal");
-            
-            printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
-                                 "ADMIN MISSION LOG<br>" + 
-                                 "-----------------<br>" + 
-                                 "</span>", curID);
-            curID += 1;
+            typeWriter([
+                        {
+                            "text": 
+                                "Complete:<br>" + 
+                                "---------<br>", 
+                            "style": 
+                                "color:{0}".format(yellow)
+                        },
+                        {
+                            "text":
+                                "Learn Python<br>" + 
+                                "Learn about hybrid and native mobile development<br>" + 
+                                "Participate in my first hackathon<br>" +
+                                "'Spot my New Song' project<br>", 
+                            "style":
+                                "color:{0}".format(white),
+                        },
+                        {
+                            "text":
+                                "<br>" + 
+                                "In Progress:<br>" + 
+                                "------------<br>",
+                            "style":
+                                "color:{0}".format(yellow)
+                        },
+                        {
+                            "text":
+                                "Complete 800 Codeforces problems (400+/800)<br>" + 
+                                "Complete Coursera's machine learning course<br>",
+                            "style":
+                                "color:{0}".format(white),
 
-            typeWriter([{"text": 
-                            "Complete:<br>" + 
-                            "Learn Python<br>" + 
-                            "Learn about hybrid and native mobile development<br>" + 
-                            "Participate in my first hackathon<br>" +
-                            "'Spot my New Song' project<br>" + 
-                            "<br>" + 
-                            "In Progress:<br>" + 
-                            "Complete 800 Codeforces problems (400+/800)<br>" + 
-                            "Complete Coursera's machine learning course<br>" +
-                            "<br>" + 
-                            "To-Do:<br>" + 
-                            "Complete Coursera's Algorithms I course<br>" + 
-                            "Complete Stanford's Databases course<br>" + 
-                            "Join the UCF programming team<br>" + 
-                            "<br>", 
-                        "style": "color:{0}".format(white)}], 
+                        },
+                        {
+                            "text":
+                                "<br>" + 
+                                "To-Do:<br>" + 
+                                "------<br>",
+                            "style":
+                                "color:{0}".format(yellow)
+                        },
+                        {
+                            "text":
+                                "Complete Coursera's Algorithms I course<br>" + 
+                                "Complete Stanford's Databases course<br>" + 
+                                "Join the UCF programming team<br>" + 
+                                "A new, undecided project<br>" + 
+                                "<br>",
+                            "style":
+                                "color:{0}".format(white)
+                        }], 
                         printInputLine);
         }, "My personal computer-science goals"),
         
@@ -194,14 +219,6 @@ const Commands =
         }, "Displays a clickable link to my resume (not yet active)"),
     "skills": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
-                                 "terminal");
-            printToElementWithID("<span style='color:{0}'>".format(red) +
-                                 "CORE SKILLS:<br>" + 
-                                 "------------<br>" + 
-                                 "</span>", curID);
-            curID += 1;
-
             typeWriter([
                 {
                     "text":
@@ -231,7 +248,7 @@ const Commands =
                 {
                     "text":
                         "Git AccuRev XCode Android_Studio " + 
-                        "Unity Angular.js Node.js Cordova<br><br>",
+                        "Unity Angular.js Node.js Cordova",
                     "style":
                         "color:{0};word-spacing:10px".format(white),
                     "time":
@@ -239,6 +256,7 @@ const Commands =
                 },
                 {
                     "text":
+                        "<br><br>" + 
                         "Miscellaneous Technologies<br>" + 
                         "--------------------------<br>",
                     "style":
@@ -308,7 +326,7 @@ window.onload = function ()
 function launchSequence()
 {
     mobileString = "<span style='color:{0}'>".format(yellow) + 
-                    "You're on a mobile device! Please click by the '$' symbol to get started.<br><br>"
+                    "You're on a mobile device! Please click anywhere to begin typing.<br><br>"
                     "<br><br></span>".format(white)
 
     printToElementWithID("<span style='color:{0}'>".format(white) + 
