@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.1";
+const ver = "4.1.2";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -89,11 +89,8 @@ const Commands =
                         {
                             "text":
                                 "<br>In a good way!<br>" +
-                                "When put on a project, I first like break everything to figure it out.<br>" +
+                                "When put on a project, I first like to break everything to figure it out.<br>" +
                                 "<br>" +  
-                                "I greatly enjoy learning and fast-paced environments as I like constant work.<br>" +
-                                "As long as the work is for a good purpose, I could code for days.<br>" +
-                                "<br>" + 
                                 "All of my work so far has been based in Orlando, Florida.<br>" + 
                                 "Despite this fact, I'm open to all options that are based in the United States.<br>" +
                                 "<br>" +  
@@ -102,6 +99,14 @@ const Commands =
                                 "<br>",
                             "style":
                                 "color:{0}".format(white)
+                        },
+                        {
+                            "text":
+                                "... Did I mention I bring doughnuts to the office? :)<br><br>",
+                            "style":
+                                "color:{0}".format(yellow),
+                            "time":
+                                timeConstant * 2
                         }],
                         printInputLine);
         }, "Tells you a little bit about me"),
@@ -316,7 +321,7 @@ window.onload = function ()
     terminal.addEventListener("paste", handlePaste);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
-    // If on mobile, click = skip dialogue
+    // If on mobile, click = skip dialogue or focus input box.
     document.addEventListener("click", clickMobileHandler);
 
     launchSequence();
