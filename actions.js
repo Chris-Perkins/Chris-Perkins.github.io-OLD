@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "3.2.1";
+const ver = "4.0.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -28,13 +28,7 @@ class Command
 {
     constructor(action, description)
     {
-        this.action = function()
-            {
-                printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
-                                     "terminal");
-                
-                action();
-            }
+        this.action = action
         this.description = description;
     }
 }
@@ -44,6 +38,9 @@ const Commands =
 {
     "help": new Command(function() 
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
+            
             for(command in Commands)
             {
                 printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
@@ -51,16 +48,20 @@ const Commands =
             }
             printToElementWithID("<br>", curID);
 
-            printInputLine();
             curID += 1;
+            printInputLine();
         }, "Displays all commands and their descriptions"),
 
     "about": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
             printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
                                  "ADMIN'S AUTOBIOGRAPHY:<br>" + 
                                  "----------------------<br>" + 
                                  "</span>", curID);
+            curID += 1;
+
             typeWriter([{
                             "text": 
                                 "Firstly, thank you for your interest! It means a lot. :)<br>" +
@@ -100,11 +101,14 @@ const Commands =
                             "style":
                                 "color:{0}".format(white)
                         }],
-                        function(){curID+=1;printInputLine();});
+                        printInputLine);
         }, "Tells you a little bit about me"),
 
     "clean": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
+
             if(localStorageAccess)
             {
                 localStorage.clear();
@@ -114,12 +118,16 @@ const Commands =
             {
                 printToElementWithID("There are no cookies to clean.<br><br>", curID);
             }
+
             curID += 1;
             printInputLine();
         }, "cleans saved cookies"),
 
     "contact": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
+            
             printToElementWithID("email - christopherpaulperkins@gmail.com<br>" +
                                  "phone number - (352)459-9716<br>" +  
                                  "<span style='color:{0}'>".format(yellow) + 
@@ -132,6 +140,9 @@ const Commands =
 
     "github": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
+            
             printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
                                  "My GitHub Profile</a><br><br>", curID);
 
@@ -142,22 +153,25 @@ const Commands =
     
     "goals": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
             
             printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
                                  "ADMIN MISSION LOG<br>" + 
                                  "-----------------<br>" + 
                                  "</span>", curID);
+            curID += 1;
+
             typeWriter([{"text": 
                             "Complete:<br>" + 
                             "Learn Python<br>" + 
                             "Learn about hybrid and native mobile development<br>" + 
                             "Participate in my first hackathon<br>" +
+                            "'Spot my New Song' project<br>" + 
                             "<br>" + 
                             "In Progress:<br>" + 
-                            "Complete 800 Codeforces problems (375+/800)<br>" + 
+                            "Complete 800 Codeforces problems (400+/800)<br>" + 
                             "Complete Coursera's machine learning course<br>" +
-                            "'Spot my New Song' project<br>" + 
-                            "'MiddleMan' iOS project<br>" + 
                             "<br>" + 
                             "To-Do:<br>" + 
                             "Complete Coursera's Algorithms I course<br>" + 
@@ -165,22 +179,26 @@ const Commands =
                             "Join the UCF programming team<br>" + 
                             "<br>", 
                         "style": "color:{0}".format(white)}], 
-                        function(){printInputLine();curID+=1;})
+                        printInputLine);
         }, "My personal computer-science goals"),
         
     "resume": new Command(function()
         {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
             printToElementWithID("<a href='resume.html' target='_blank'>My Resume</a><br><br>", curID);
-            
-            printInputLine();
             curID += 1;
+            printInputLine();
         }, "Displays a clickable link to my resume (not yet active)"),
     "skills": new Command(function()
         {
-            printToElementWithID("<span style='color:{0}'>".format(yellow) +
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                 "terminal");
+            printToElementWithID("<span style='color:{0}'>".format(red) +
                                  "CORE SKILLS:<br>" + 
                                  "------------<br>" + 
                                  "</span>", curID);
+            curID += 1;
 
             typeWriter([
                 {
@@ -188,7 +206,7 @@ const Commands =
                         "Languages:<br>" + 
                         "----------<br>",
                     "style":
-                        "color:{0}".format(white)
+                        "color:{0}".format(yellow)
                 },
                 {
                     "text":
@@ -206,7 +224,7 @@ const Commands =
                         "Tools:<br>" + 
                         "------<br>",
                     "style":
-                        "color:{0}".format(white)
+                        "color:{0}".format(yellow)
                 },
                 {
                     "text":
@@ -222,7 +240,7 @@ const Commands =
                         "Miscellaneous Technologies<br>" + 
                         "--------------------------<br>",
                     "style":
-                        "color:{0}".format(white)
+                        "color:{0}".format(yellow)
                 },
                 {
                     "text":
@@ -231,7 +249,8 @@ const Commands =
                         "color:{0};word-spacing:10px".format(white),
                     "time":
                         timeConstant * 2
-                }], function(){printInputLine();curID+=1})
+                }],
+                printInputLine)
         }, "Displays a list of my core skills")
 }
 
@@ -246,12 +265,14 @@ function getCommand(commandID)
     }
     else if (typeof Commands[commandID] === "undefined")
     {
-        terminal.innerHTML += "<span id={0} style='color:{1}'></span>".format(curID, white);
+        printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+                                "terminal");
         printToElementWithID("'{0}' is not a valid command.<br> ".format(commandID) + 
                              "Enter '<span style='color:{0}'>help</span>' ".format(yellow) +
                              "to view a list of available commands.<br><br>", curID);
-        printInputLine();
+
         curID += 1;
+        printInputLine();
     }
     else
     {
@@ -263,21 +284,26 @@ function getCommand(commandID)
 window.onload = function ()
 {
     terminal = document.getElementById("terminal");
+    // wipe out html to remove default page that displays if JS could not load
+    // If you want to see this page, just load it in internet explorer.
     terminal.innerHTML = "";
-    // Load external function
+    
     loadFunctions();
     // Prevent paste
     terminal.addEventListener("paste", handlePaste);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
 
-    // Start launch sequence
     launchSequence();
 }
 
 // Sequence that occurs when user 
 function launchSequence()
 {
+    mobileString = "<span style='color:{0}'>".format(white) + 
+                    "You're on mobile! Please click by the '$' symbol to get started.<br><br>"
+                    "<br><br></span>".format(white)
+
     printToElementWithID("<span style='color:{0}'>".format(white) + 
                          "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
                          "</span>", "terminal");
@@ -315,7 +341,15 @@ function launchSequence()
                         "style":
                             "color:{0}".format(white)
                     }], 
-                   function(){curID+=1;printInputLine();});
+                   function()
+                   {
+                        if (mobileAndTabletcheck())
+                        {
+                           printToElementWithID(mobileString, "terminal")
+                        }
+
+                       printInputLine();
+                    });
         
         if (localStorageAccess)
         {
@@ -344,7 +378,7 @@ function launchSequence()
                             "style": 
                             "color:{0}".format(red),
                         "time": 
-                            1000
+                            500
                     },
                     {
                         "text": 
@@ -386,8 +420,16 @@ function launchSequence()
                         "style":
                             "color:{0}".format(white)
                     }], 
-                    function(){curID+=1;printInputLine();});
+                    function()
+                    {
+                        if (mobileAndTabletcheck())
+                        {
+                           printToElementWithID(mobileString, "terminal")
+                        }
 
+                       printInputLine();
+                    });
+        
         localStorage.visitCount += 1;
     }
 }
@@ -395,7 +437,6 @@ function launchSequence()
 // Determine if we have access to localstorage
 function determineLocalStorageAccess()
 {
-    var mod = "test";
     try
     {
         localStorage.setItem(mod, mod);
@@ -431,7 +472,6 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         endFunction();
         return;
     }
-
     // On first strIndex, create our span and set time
     if (strIndex == 0)
     {
@@ -441,14 +481,6 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         
         time = printArray[arrayIndex]["time"]||timeConstant;
     }
-
-    var objDiv = document.getElementById("terminal");
-    objDiv.scrollTop = objDiv.scrollHeight;
-
-    // extra time-out used on html tag end
-    extraTimeOut = 0;
-
-
     // Base case 2: reached end of string
     // Alternate case: user skipped dialogue
     if (strIndex === printArray[arrayIndex]["text"].length || overrideTypeWriter)
@@ -460,51 +492,55 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
 
         return;
     }
-    else
-    {
-        // If not an html tag
-        if (currentSavedString == "")
-        {
-            if (printArray[arrayIndex]["text"][strIndex] == "<")
-            {
-                currentSavedString += printArray[arrayIndex]["text"][strIndex];
-            }
-            else
-            {
-                // If we printed a punctuation mark
-                if(punctuation.indexOf(printArray[arrayIndex]["text"][strIndex]) != -1)
-                {
-                    extraTimeOut += 200
-                }
 
-                printToElementWithID(printArray[arrayIndex]["text"][strIndex], id);
-            }
+    var objDiv = document.getElementById("terminal");
+    objDiv.scrollTop = objDiv.scrollHeight;
+
+    // extra time-out used on html tag end
+    extraTimeOut = 0;
+
+    // If not an html tag
+    if (currentSavedString == "")
+    {
+        if (printArray[arrayIndex]["text"][strIndex] == "<")
+        {
+            currentSavedString += printArray[arrayIndex]["text"][strIndex];
         }
         else
         {
-            currentSavedString += printArray[arrayIndex]["text"][strIndex];
-            
-            // Skip timed print while parsing through html bracket
-            extraTimeOut = -time
-            // If close an html string
-            if (printArray[arrayIndex]["text"][strIndex] == ">")
+            // If we printed a punctuation mark
+            if(punctuation.indexOf(printArray[arrayIndex]["text"][strIndex]) != -1)
             {
-                printToElementWithID(currentSavedString, id);
-                currentSavedString = "";
-
-                // On end of html bracket, take extra time
-                // Gives feeling of proper typing on <br>
-                extraTimeOut = time * 15;
+                extraTimeOut += 200
             }
-        }
-        setTimeout(function()
-        {
-            typeWriterHelper(printArray, arrayIndex, strIndex + 1, 
-                             currentSavedString, id, endFunction)
-        }, time + extraTimeOut);
 
-        return;
+            printToElementWithID(printArray[arrayIndex]["text"][strIndex], id);
+        }
     }
+    else
+    {
+        currentSavedString += printArray[arrayIndex]["text"][strIndex];
+        
+        // Skip timed print while parsing through html bracket
+        extraTimeOut = -time
+        // If close an html string
+        if (printArray[arrayIndex]["text"][strIndex] == ">")
+        {
+            printToElementWithID(currentSavedString, id);
+            currentSavedString = "";
+
+            // On end of html bracket, take extra time
+            // Gives feeling of proper typing on <br>
+            extraTimeOut = time * 15;
+        }
+    }
+    setTimeout(function()
+    {
+        typeWriterHelper(printArray, arrayIndex, strIndex + 1, 
+                            currentSavedString, id, endFunction)
+    }, time + extraTimeOut);
+
+    return;
 }
 
 // Print the line for user input
@@ -629,3 +665,11 @@ function loadFunctions()
         };
     }
 }
+
+// Detect mobile browser. Found at:
+// https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+window.mobileAndTabletcheck = function() {
+  var check = false;
+  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  return check;
+};
