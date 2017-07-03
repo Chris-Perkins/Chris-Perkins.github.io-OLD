@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.2";
+const ver = "4.1.3";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
