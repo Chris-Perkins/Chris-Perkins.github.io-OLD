@@ -319,10 +319,10 @@ window.onload = function ()
     loadFunctions();
     // Prevent paste
     terminal.addEventListener("paste", handlePaste);
+    // If on mobile, click = skip dialogue or focus input box.
+    terminal.addEventListener("click", clickMobileHandler);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
-    // If on mobile, click = skip dialogue or focus input box.
-    document.addEventListener("click", clickMobileHandler);
 
     launchSequence();
 }
