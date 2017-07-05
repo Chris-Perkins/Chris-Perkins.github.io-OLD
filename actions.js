@@ -218,7 +218,9 @@ const Commands =
         {
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
                                  "terminal");
-            printToElementWithID("<a href='resume.pdf' target='_blank'>My Resume</a><br><br>", curID);
+            printToElementWithID("<a href='Chris-Perkins-Resume.pdf' target='_blank'>" + 
+                                 "My Resume" + 
+                                 "</a><br><br>", curID);
             curID += 1;
             printInputLine();
         }, "Displays a clickable link to my resume"),
