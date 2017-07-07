@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.4";
+const ver = "4.1.5";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -173,7 +173,8 @@ const Commands =
                                 "Learn Python<br>" + 
                                 "Learn about hybrid and native mobile development<br>" + 
                                 "Participate in my first hackathon<br>" +
-                                "'Spot my New Song' project<br>", 
+                                "'Spot my New Song' project<br>" + 
+                                "Complete Stanford University's machine learning course<br>", 
                             "style":
                                 "color:{0}".format(white),
                         },
@@ -187,8 +188,8 @@ const Commands =
                         },
                         {
                             "text":
-                                "Complete 800 Codeforces problems (400+/800)<br>" + 
-                                "Complete Coursera's machine learning course<br>",
+                                "Complete Princeton University's Algorithms I course<br>" + 
+                                "Complete 800 Codeforces problems (425+/800)<br>",
                             "style":
                                 "color:{0}".format(white),
 
@@ -203,10 +204,9 @@ const Commands =
                         },
                         {
                             "text":
-                                "Complete Coursera's Algorithms I course<br>" + 
                                 "Complete Stanford's Databases course<br>" + 
                                 "Join the UCF programming team<br>" + 
-                                "A new, undecided project<br>" + 
+                                "'Lift Buddy', an iOS application to help with gym tracking<br>" +  
                                 "<br>",
                             "style":
                                 "color:{0}".format(white)
@@ -333,7 +333,8 @@ window.onload = function ()
 function launchSequence()
 {
     mobileString = "<span style='color:{0}'>".format(yellow) + 
-                    "You're on a mobile device! Please click anywhere to begin typing.<br><br>"
+                    "You're on a mobile device! Please click anywhere to begin typing<br>" + 
+                    "(This click functionality doesn't exist on iOS Safari Browser... yet).<br><br>"
                     "<br><br></span>".format(white)
 
     printToElementWithID("<span style='color:{0}'>".format(white) + 
