@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.5";
+const ver = "4.1.6";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -129,6 +129,12 @@ const Commands =
             curID += 1;
             printInputLine();
         }, "cleans saved cookies"),
+
+    "clear": new Command(function()
+        {
+            terminal.innerHTML = "";
+            printInputLine();
+        }, "clears the screen"),
 
     "contact": new Command(function()
         {
