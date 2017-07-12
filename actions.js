@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.1.6";
+const ver = "4.2.0";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -15,7 +15,7 @@ const actionKeycodes = [27, 16, 17, 18, 20, 144,
                         115, 116, 117, 118, 119, 120,
                         121, 122, 123, 224, 91];
 // Punctuation marks
-const punctuation = [",", ".", "!", "?", ":", ";"]
+const punctuation = [",", ".", "!", "?", ":", ";"];
 // Current speed for typewriter
 var time = 0;
 // Skip typewriter
@@ -23,15 +23,23 @@ var overrideTypeWriter = false;
 var curID = 0;
 var terminal = null;
 
-/* !-- COMMAND DECLARATION --! */
+/* !-- COMMAND DECLARATIONS --! */
+
+// Format of command: TYPE: Description_String
+const commandTypes = {
+                        PERSONAL: "Get to Know Me Better",
+                        LINK: "External Links",
+                        MISC: "Miscellaneous Commands", 
+                     };
 
 // All commands have a function and description
 class Command 
 {
-    constructor(action, description)
+    constructor(action, description, commandType)
     {
-        this.action = action
+        this.action = action;
         this.description = description;
+        this.commandType = commandType;
     }
 }
 
@@ -43,16 +51,38 @@ const Commands =
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
                                  "terminal");
             
+            dict_commands = {}
+            for (commandType in commandTypes)
+            {
+                dict_commands[commandTypes[commandType]] = []
+            }
+
             for(command in Commands)
             {
-                printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
-                                        yellow, command, Commands[command].description), curID);
+                dict_commands[Commands[command].commandType].push(command)
+            }
+
+            for (commandType in commandTypes)
+            {
+                separateLine = "";
+                for (index in commandTypes[commandType]){separateLine += "-"};
+
+                printToElementWithID("<div style='color:{0}'>{1}<br>{2}<br></span>".format(
+                        yellow, commandTypes[commandType], separateLine), curID);
+                
+                for (index in dict_commands[commandTypes[commandType]])
+                {
+                    command = dict_commands[commandTypes[commandType]][index];
+                    printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
+                        yellow, command, Commands[command].description), curID);
+                }
+                printToElementWithID("<br>", curID)
             }
             printToElementWithID("<br>", curID);
 
             curID += 1;
             printInputLine();
-        }, "Displays all commands and their descriptions"),
+        }, "Displays all commands and their descriptions", commandTypes.MISC),
 
     "about": new Command(function()
         {
@@ -109,7 +139,7 @@ const Commands =
                                 timeConstant * 2
                         }],
                         printInputLine);
-        }, "Tells you a little bit about me"),
+        }, "Tells you a little bit about me", commandTypes.PERSONAL),
 
     "clean": new Command(function()
         {
@@ -128,13 +158,13 @@ const Commands =
 
             curID += 1;
             printInputLine();
-        }, "cleans saved cookies"),
+        }, "cleans saved cookies", commandTypes.MISC),
 
     "clear": new Command(function()
         {
             terminal.innerHTML = "";
             printInputLine();
-        }, "clears the screen"),
+        }, "clears the screen", commandTypes.MISC),
 
     "contact": new Command(function()
         {
@@ -149,7 +179,7 @@ const Commands =
                 
                 curID += 1;
                 printInputLine();
-        }, "Displays my contact information"),
+        }, "Displays my contact information", commandTypes.PERSONAL),
 
     "github": new Command(function()
         {
@@ -162,7 +192,7 @@ const Commands =
             curID += 1;
             printInputLine();
         }, 
-        "Displays a clickable link to my GitHub account"),
+        "Displays a clickable link to my GitHub account", commandTypes.LINK),
     
     "goals": new Command(function()
         {
@@ -218,7 +248,7 @@ const Commands =
                                 "color:{0}".format(white)
                         }], 
                         printInputLine);
-        }, "My personal computer-science goals"),
+        }, "My personal computer-science goals", commandTypes.PERSONAL),
         
     "resume": new Command(function()
         {
@@ -229,7 +259,7 @@ const Commands =
                                  "</a><br><br>", curID);
             curID += 1;
             printInputLine();
-        }, "Displays a clickable link to my resume"),
+        }, "Displays a clickable link to my resume", commandTypes.LINK),
     "skills": new Command(function()
         {
             typeWriter([
@@ -284,7 +314,7 @@ const Commands =
                         timeConstant * 2
                 }],
                 printInputLine)
-        }, "Displays a list of my core skills")
+        }, "Displays a list of my core skills", commandTypes.PERSONAL)
 }
 
 function getCommand(commandID)
@@ -335,12 +365,12 @@ window.onload = function ()
     launchSequence();
 }
 
-// Sequence that occurs when user 
+// Sequence that occurs when user's javascript runs properly 
 function launchSequence()
 {
     mobileString = "<span style='color:{0}'>".format(yellow) + 
                     "You're on a mobile device! Please click anywhere to begin typing<br>" + 
-                    "(This click functionality doesn't exist on iOS Safari Browser... yet).<br><br>"
+                    "(If on iOS Safari, you need to click next to the '$' symbol to begin).<br><br>"
                     "<br><br></span>".format(white)
 
     printToElementWithID("<span style='color:{0}'>".format(white) + 
