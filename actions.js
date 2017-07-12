@@ -1,5 +1,5 @@
 const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.2.0";
+const ver = "4.2.1";
 //global colors
 const green = "#50e077";
 const yellow = "#ede671";
@@ -51,32 +51,36 @@ const Commands =
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
                                  "terminal");
             
-            dict_commands = {}
+            // First create a dictionary of command types with empty arrays as values
+            dict_commands = {};
             for (commandType in commandTypes)
             {
-                dict_commands[commandTypes[commandType]] = []
+                dict_commands[commandTypes[commandType]] = [];
             }
 
+            // Go through every command, append it to the corresponding commany type array
             for(command in Commands)
             {
-                dict_commands[Commands[command].commandType].push(command)
+                dict_commands[Commands[command].commandType].push(command);
             }
 
+            // Print out every command type and it's corresponding commands
             for (commandType in commandTypes)
             {
+                // Dashed line between command type description and actual commands
                 separateLine = "";
                 for (index in commandTypes[commandType]){separateLine += "-"};
 
                 printToElementWithID("<div style='color:{0}'>{1}<br>{2}<br></span>".format(
-                        yellow, commandTypes[commandType], separateLine), curID);
+                                     yellow, commandTypes[commandType], separateLine), curID);
                 
                 for (index in dict_commands[commandTypes[commandType]])
                 {
                     command = dict_commands[commandTypes[commandType]][index];
                     printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
-                        yellow, command, Commands[command].description), curID);
+                                         yellow, command, Commands[command].description), curID);
                 }
-                printToElementWithID("<br>", curID)
+                printToElementWithID("<br>", curID);
             }
             printToElementWithID("<br>", curID);
 
