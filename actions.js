@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.2";
+const VERSION = "4.2.3";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -82,7 +82,6 @@ const Commands =
                 }
                 printToElementWithID("<br>", CURRENTID);
             }
-            printToElementWithID("<br>", CURRENTID);
 
             CURRENTID += 1;
             printInputLine();
@@ -106,7 +105,7 @@ const Commands =
                                 "and I am a member of the Burnett Honors College and admittant to the accelerated BS to MS program.<br>" +
                                 "<br>" +  
                                 "More importantly, I have a passion for creative, efficient, and simple solutions.<br>" + 
-                                "I've recently come to love building applications such as EyeBot, Spot my New Song, or Shadobot.<br>" + 
+                                "I've recently come to love building applications such as EyeBot, Spot my New Song, and Shadobot.<br>" + 
                                 "These applications can be viewed on my GitHub.<br>" + 
                                 "<br>",
                             "style": 
