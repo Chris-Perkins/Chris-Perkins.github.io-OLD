@@ -1,32 +1,32 @@
-const loc = "recruitor@CHRIS:~$ ";
-const ver = "4.2.1";
+const LOCATION = "recruitor@CHRIS:~$ ";
+const VERSION = "4.2.2";
 //global colors
-const green = "#50e077";
-const yellow = "#ede671";
-const white = "white";
-const red = "#ff5b5b";
+const GREEN = "#50e077";
+const YELLOW = "#ede671";
+const WHITE = "white";
+const RED = "#ff5b5b";
 // Typewriter speed if not defined
-const timeConstant = 30;
+const TIMECONSTANT = 30;
 // Whether we have LocalStorage permissions
-var localStorageAccess = false;
+var LOCALSTORAGEACCESS = false;
 // action keys (ctrl, shift, command, num lock... etc)
-const actionKeycodes = [27, 16, 17, 18, 20, 144,
+const ACTIONKEYCODES = [27, 16, 17, 18, 20, 144,
                         37, 38, 39, 40, 112, 113, 114,
                         115, 116, 117, 118, 119, 120,
                         121, 122, 123, 224, 91];
 // Punctuation marks
-const punctuation = [",", ".", "!", "?", ":", ";"];
+const PUNCTUATION = [",", ".", "!", "?", ":", ";"];
 // Current speed for typewriter
-var time = 0;
+var TIME = 0;
 // Skip typewriter
-var overrideTypeWriter = false;
-var curID = 0;
-var terminal = null;
+var OVERRIDETYPEWRITER = false;
+var CURRENTID = 0;
+var TERMINAL = null;
 
 /* !-- COMMAND DECLARATIONS --! */
 
 // Format of command: TYPE: Description_String
-const commandTypes = {
+const COMMANDTYPES = {
                         PERSONAL: "Get to Know Me Better",
                         LINK: "External Links",
                         MISC: "Miscellaneous Commands", 
@@ -48,14 +48,14 @@ const Commands =
 {
     "help": new Command(function() 
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
             
             // First create a dictionary of command types with empty arrays as values
             dict_commands = {};
-            for (commandType in commandTypes)
+            for (commandType in COMMANDTYPES)
             {
-                dict_commands[commandTypes[commandType]] = [];
+                dict_commands[COMMANDTYPES[commandType]] = [];
             }
 
             // Go through every command, append it to the corresponding commany type array
@@ -65,38 +65,38 @@ const Commands =
             }
 
             // Print out every command type and it's corresponding commands
-            for (commandType in commandTypes)
+            for (commandType in COMMANDTYPES)
             {
                 // Dashed line between command type description and actual commands
                 separateLine = "";
-                for (index in commandTypes[commandType]){separateLine += "-"};
+                for (index in COMMANDTYPES[commandType]){separateLine += "-"};
 
                 printToElementWithID("<div style='color:{0}'>{1}<br>{2}<br></span>".format(
-                                     yellow, commandTypes[commandType], separateLine), curID);
+                                     YELLOW, COMMANDTYPES[commandType], separateLine), CURRENTID);
                 
-                for (index in dict_commands[commandTypes[commandType]])
+                for (index in dict_commands[COMMANDTYPES[commandType]])
                 {
-                    command = dict_commands[commandTypes[commandType]][index];
+                    command = dict_commands[COMMANDTYPES[commandType]][index];
                     printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
-                                         yellow, command, Commands[command].description), curID);
+                                         YELLOW, command, Commands[command].description), CURRENTID);
                 }
-                printToElementWithID("<br>", curID);
+                printToElementWithID("<br>", CURRENTID);
             }
-            printToElementWithID("<br>", curID);
+            printToElementWithID("<br>", CURRENTID);
 
-            curID += 1;
+            CURRENTID += 1;
             printInputLine();
-        }, "Displays all commands and their descriptions", commandTypes.MISC),
+        }, "Displays all commands and their descriptions", COMMANDTYPES.MISC),
 
     "about": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
-            printToElementWithID("<span style='color:{0}'><br>".format(yellow) + 
+            printToElementWithID("<span style='color:{0}'><br>".format(YELLOW) + 
                                  "ADMIN'S AUTOBIOGRAPHY:<br>" + 
                                  "----------------------<br>" + 
-                                 "</span>", curID);
-            curID += 1;
+                                 "</span>", CURRENTID);
+            CURRENTID += 1;
 
             typeWriter([{
                             "text": 
@@ -110,13 +110,13 @@ const Commands =
                                 "These applications can be viewed on my GitHub.<br>" + 
                                 "<br>",
                             "style": 
-                                "color:{0}".format(white)
+                                "color:{0}".format(WHITE)
                         },
                         {
                             "text":
                                 "I also like breaking things...",
                             "style":
-                                "color:{0}".format(red),
+                                "color:{0}".format(RED),
                             "time":
                                 150
                         },
@@ -132,71 +132,71 @@ const Commands =
                                     "contribute to a team's operations in a meaningful way.<br>" +
                                 "<br>",
                             "style":
-                                "color:{0}".format(white)
+                                "color:{0}".format(WHITE)
                         },
                         {
                             "text":
                                 "... Did I mention I bring doughnuts to the office? :)<br><br>",
                             "style":
-                                "color:{0}".format(yellow),
+                                "color:{0}".format(YELLOW),
                             "time":
-                                timeConstant * 2
+                                TIMECONSTANT * 2
                         }],
                         printInputLine);
-        }, "Tells you a little bit about me", commandTypes.PERSONAL),
+        }, "Tells you a little bit about me", COMMANDTYPES.PERSONAL),
 
     "clean": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
 
-            if(localStorageAccess)
+            if(LOCALSTORAGEACCESS)
             {
                 localStorage.clear();
-                printToElementWithID("Cookies have been cleaned!<br><br>", curID);
+                printToElementWithID("Cookies have been cleaned!<br><br>", CURRENTID);
             }
             else
             {
-                printToElementWithID("There are no cookies to clean.<br><br>", curID);
+                printToElementWithID("There are no cookies to clean.<br><br>", CURRENTID);
             }
 
-            curID += 1;
+            CURRENTID += 1;
             printInputLine();
-        }, "cleans saved cookies", commandTypes.MISC),
+        }, "cleans saved cookies", COMMANDTYPES.MISC),
 
     "clear": new Command(function()
         {
-            terminal.innerHTML = "";
+            TERMINAL.innerHTML = "";
             printInputLine();
-        }, "clears the screen", commandTypes.MISC),
+        }, "clears the screen", COMMANDTYPES.MISC),
 
     "contact": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
             
             printToElementWithID("email - christopherpaulperkins@gmail.com<br>" +
                                  "phone number - (352)459-9716<br>" +  
-                                 "<span style='color:{0}'>".format(yellow) + 
+                                 "<span style='color:{0}'>".format(YELLOW) + 
                                  "Note: I may not respond to phone calls as I don't answer at class or at work." + 
-                                 "<br><br></span>", curID);
+                                 "<br><br></span>", CURRENTID);
                 
-                curID += 1;
+                CURRENTID += 1;
                 printInputLine();
-        }, "Displays my contact information", commandTypes.PERSONAL),
+        }, "Displays my contact information", COMMANDTYPES.PERSONAL),
 
     "github": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
             
             printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
-                                 "My GitHub Profile</a><br><br>", curID);
+                                 "My GitHub Profile</a><br><br>", CURRENTID);
 
-            curID += 1;
+            CURRENTID += 1;
             printInputLine();
         }, 
-        "Displays a clickable link to my GitHub account", commandTypes.LINK),
+        "Displays a clickable link to my GitHub account", COMMANDTYPES.LINK),
     
     "goals": new Command(function()
         {
@@ -206,7 +206,7 @@ const Commands =
                                 "Complete:<br>" + 
                                 "---------<br>", 
                             "style": 
-                                "color:{0}".format(yellow)
+                                "color:{0}".format(YELLOW)
                         },
                         {
                             "text":
@@ -216,7 +216,7 @@ const Commands =
                                 "'Spot my New Song' project<br>" + 
                                 "Complete Stanford University's machine learning course<br>", 
                             "style":
-                                "color:{0}".format(white),
+                                "color:{0}".format(WHITE),
                         },
                         {
                             "text":
@@ -224,14 +224,14 @@ const Commands =
                                 "In Progress:<br>" + 
                                 "------------<br>",
                             "style":
-                                "color:{0}".format(yellow)
+                                "color:{0}".format(YELLOW)
                         },
                         {
                             "text":
                                 "Complete Princeton University's Algorithms I course<br>" + 
                                 "Complete 800 Codeforces problems (425+/800)<br>",
                             "style":
-                                "color:{0}".format(white),
+                                "color:{0}".format(WHITE),
 
                         },
                         {
@@ -240,7 +240,7 @@ const Commands =
                                 "To-Do:<br>" + 
                                 "------<br>",
                             "style":
-                                "color:{0}".format(yellow)
+                                "color:{0}".format(YELLOW)
                         },
                         {
                             "text":
@@ -249,21 +249,21 @@ const Commands =
                                 "'Lift Buddy', an iOS application to help with gym tracking<br>" +  
                                 "<br>",
                             "style":
-                                "color:{0}".format(white)
+                                "color:{0}".format(WHITE)
                         }], 
                         printInputLine);
-        }, "My personal computer-science goals", commandTypes.PERSONAL),
+        }, "My personal computer-science goals", COMMANDTYPES.PERSONAL),
         
     "resume": new Command(function()
         {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                  "terminal");
             printToElementWithID("<a href='Chris-Perkins-Resume.pdf' target='_blank'>" + 
                                  "My Resume" + 
-                                 "</a><br><br>", curID);
-            curID += 1;
+                                 "</a><br><br>", CURRENTID);
+            CURRENTID += 1;
             printInputLine();
-        }, "Displays a clickable link to my resume", commandTypes.LINK),
+        }, "Displays a clickable link to my resume", COMMANDTYPES.LINK),
     "skills": new Command(function()
         {
             typeWriter([
@@ -272,7 +272,7 @@ const Commands =
                         "Languages:<br>" + 
                         "----------<br>",
                     "style":
-                        "color:{0}".format(yellow)
+                        "color:{0}".format(YELLOW)
                 },
                 {
                     "text":
@@ -280,9 +280,9 @@ const Commands =
                         "Objective-C Swift SQL " +
                         "Javascript HTML CSS",
                     "style":
-                        "color:{0};word-spacing:10px".format(white),
+                        "color:{0};word-spacing:10px".format(WHITE),
                     "time":
-                        timeConstant * 2
+                        TIMECONSTANT * 2
                 },
                 {
                     "text":
@@ -290,16 +290,16 @@ const Commands =
                         "Tools:<br>" + 
                         "------<br>",
                     "style":
-                        "color:{0}".format(yellow)
+                        "color:{0}".format(YELLOW)
                 },
                 {
                     "text":
                         "Git AccuRev XCode Android_Studio " + 
                         "Unity Angular.js Node.js Cordova",
                     "style":
-                        "color:{0};word-spacing:10px".format(white),
+                        "color:{0};word-spacing:10px".format(WHITE),
                     "time":
-                        timeConstant * 2
+                        TIMECONSTANT * 2
                 },
                 {
                     "text":
@@ -307,18 +307,18 @@ const Commands =
                         "Miscellaneous Technologies<br>" + 
                         "--------------------------<br>",
                     "style":
-                        "color:{0}".format(yellow)
+                        "color:{0}".format(YELLOW)
                 },
                 {
                     "text":
                         "PhotoShop After_Effects Illustrator Word PowerPoint Excel Mac Windows<br><br>",
                     "style":
-                        "color:{0};word-spacing:10px".format(white),
+                        "color:{0};word-spacing:10px".format(WHITE),
                     "time":
-                        timeConstant * 2
+                        TIMECONSTANT * 2
                 }],
                 printInputLine)
-        }, "Displays a list of my core skills", commandTypes.PERSONAL)
+        }, "Displays a list of my core skills", COMMANDTYPES.PERSONAL)
 }
 
 function getCommand(commandID)
@@ -331,13 +331,13 @@ function getCommand(commandID)
     }
     else if (typeof Commands[commandID] === "undefined")
     {
-        printToElementWithID("<span id={0} style='color:{1}'></span>".format(curID, white),
+        printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
                                 "terminal");
         printToElementWithID("'{0}' is not a valid command.<br> ".format(commandID) + 
-                             "Enter '<span style='color:{0}'>help</span>' ".format(yellow) +
-                             "to view a list of available commands.<br><br>", curID);
+                             "Enter '<span style='color:{0}'>help</span>' ".format(YELLOW) +
+                             "to view a list of available commands.<br><br>", CURRENTID);
 
-        curID += 1;
+        CURRENTID += 1;
         printInputLine();
     }
     else
@@ -351,18 +351,18 @@ function getCommand(commandID)
 // Entry-point
 window.onload = function ()
 {
-    localStorageAccess = determineLocalStorageAccess();
+    LOCALSTORAGEACCESS = determineLocalStorageAccess();
 
-    terminal = document.getElementById("terminal");
+    TERMINAL = document.getElementById("terminal");
     // wipe out html to remove default page that displays if JS could not load
     // If you want to see this page, just load it in internet explorer.
-    terminal.innerHTML = "";
+    TERMINAL.innerHTML = "";
     
     loadFunctions();
     // Prevent paste
-    terminal.addEventListener("paste", handlePaste);
+    TERMINAL.addEventListener("paste", handlePaste);
     // If on mobile, click = skip dialogue or focus input box.
-    terminal.addEventListener("click", clickMobileHandler);
+    TERMINAL.addEventListener("click", clickMobileHandler);
     // Newline on enter press, focus input on keypress
     document.addEventListener("keydown", keyCheck);
 
@@ -372,16 +372,16 @@ window.onload = function ()
 // Sequence that occurs when user's javascript runs properly 
 function launchSequence()
 {
-    mobileString = "<span style='color:{0}'>".format(yellow) + 
+    mobileString = "<span style='color:{0}'>".format(YELLOW) + 
                     "You're on a mobile device! Please click anywhere to begin typing<br>" + 
                     "(If on iOS Safari, you need to click next to the '$' symbol to begin).<br><br>"
-                    "<br><br></span>".format(white)
+                    "<br><br></span>".format(WHITE)
 
-    printToElementWithID("<span style='color:{0}'>".format(white) + 
-                         "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(ver) +
+    printToElementWithID("<span style='color:{0}'>".format(WHITE) + 
+                         "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(VERSION) +
                          "</span>", "terminal");
 
-    if(!localStorageAccess || !localStorage.visitCount)
+    if(!LOCALSTORAGEACCESS || !localStorage.visitCount)
     {
         typeWriter([{
                      "text": 
@@ -394,25 +394,25 @@ function launchSequence()
                         "Code should say and do more with less.<br>" + 
                         "<br>", 
                      "style": 
-                        "color:{0}".format(yellow)
+                        "color:{0}".format(YELLOW)
                     },
                     {
                         "text":
                             "Enter '",
                         "style":
-                            "color:{0}".format(white)
+                            "color:{0}".format(WHITE)
                     },
                     {
                         "text":
                             "help",
                         "style":
-                            "color:{0}".format(yellow)
+                            "color:{0}".format(YELLOW)
                     },
                     {
                         "text":
                             "' to get started.<br><br>",
                         "style":
-                            "color:{0}".format(white)
+                            "color:{0}".format(WHITE)
                     }], 
                    function()
                    {
@@ -424,7 +424,7 @@ function launchSequence()
                        printInputLine();
                     });
         
-        if (localStorageAccess)
+        if (LOCALSTORAGEACCESS)
         {
             localStorage.visitCount = 1;
         }
@@ -441,7 +441,7 @@ function launchSequence()
                             "Beauty lies in an ove-<br>" + 
                             "<br>", 
                         "style": 
-                            "color:{0}".format(yellow),
+                            "color:{0}".format(YELLOW),
                         "time": 
                             10
                     },
@@ -449,7 +449,7 @@ function launchSequence()
                         "text": 
                             " ...",
                             "style": 
-                            "color:{0}".format(red),
+                            "color:{0}".format(RED),
                         "time": 
                             500
                     },
@@ -457,7 +457,7 @@ function launchSequence()
                         "text": 
                             "<br> Oh. You've been here before.",
                         "style": 
-                            "color:{0}".format(red),
+                            "color:{0}".format(RED),
                         "time": 
                             75
                     },
@@ -466,32 +466,32 @@ function launchSequence()
                             "<br><br>Why not get in touch with me?<br>" + 
                             "Enter '",
                         "style":
-                            "color:{0}".format(white)
+                            "color:{0}".format(WHITE)
                     },
                     {
                         "text": 
                             "contact",
                         "style":
-                            "color:{0}".format(yellow)
+                            "color:{0}".format(YELLOW)
                     },
                     {
                         "text": 
                             "' to view my contact details,<br>" + 
                             "or enter '",
                       "style":
-                            "color:{0}".format(white)
+                            "color:{0}".format(WHITE)
                     },
                     {
                         "text": 
                             "help",
                         "style":
-                            "color:{0}".format(yellow)
+                            "color:{0}".format(YELLOW)
                     },
                     {
                         "text":
                             "' to view all available commands.<br><br>",
                         "style":
-                            "color:{0}".format(white)
+                            "color:{0}".format(WHITE)
                     }], 
                     function()
                     {
@@ -518,7 +518,7 @@ function printToElementWithID(htmlString, id)
 // Custom type writer function
 function typeWriter(array, endFunction)
 {   
-    typeWriterHelper(array, 0, 0, "", curID, endFunction);
+    typeWriterHelper(array, 0, 0, "", CURRENTID, endFunction);
 }
 
 // doubly-recursive function to print text in an array
@@ -537,18 +537,18 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
     {
         printToElementWithID("<span id={0} style='{1}'>".format(id, printArray[arrayIndex]["style"]) +
                              "</span>", "terminal");
-        curID += 1;
+        CURRENTID += 1;
         
-        time = printArray[arrayIndex]["time"]||timeConstant;
+        TIME = printArray[arrayIndex]["time"]||TIMECONSTANT;
     }
     // Base case 2: reached end of string
     // Alternate case: user skipped dialogue
-    if (strIndex === printArray[arrayIndex]["text"].length || overrideTypeWriter)
+    if (strIndex === printArray[arrayIndex]["text"].length || OVERRIDETYPEWRITER)
     {
         printToElementWithID(currentSavedString + 
                              printArray[arrayIndex]["text"].substr(strIndex), id);
         // Move to next array index
-        typeWriterHelper(printArray, arrayIndex + 1, 0, "", curID, endFunction);
+        typeWriterHelper(printArray, arrayIndex + 1, 0, "", CURRENTID, endFunction);
 
         return;
     }
@@ -569,7 +569,7 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         else
         {
             // If we printed a punctuation mark
-            if(punctuation.indexOf(printArray[arrayIndex]["text"][strIndex]) != -1)
+            if(PUNCTUATION.indexOf(printArray[arrayIndex]["text"][strIndex]) != -1)
             {
                 extraTimeOut += 200
             }
@@ -582,7 +582,7 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
         currentSavedString += printArray[arrayIndex]["text"][strIndex];
         
         // Skip timed print while parsing through html bracket
-        extraTimeOut = -time
+        extraTimeOut = -TIME
         // If close an html string
         if (printArray[arrayIndex]["text"][strIndex] == ">")
         {
@@ -591,14 +591,14 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
 
             // On end of html bracket, take extra time
             // Gives feeling of proper typing on <br>
-            extraTimeOut = time * 15;
+            extraTimeOut = TIME * 15;
         }
     }
     setTimeout(function()
     {
         typeWriterHelper(printArray, arrayIndex, strIndex + 1, 
                             currentSavedString, id, endFunction)
-    }, time + extraTimeOut);
+    }, TIME + extraTimeOut);
 
     return;
 }
@@ -607,10 +607,10 @@ function typeWriterHelper(printArray, arrayIndex, strIndex,
 function printInputLine()
 {
     // We know typeWriter has ended when this is called.
-    overrideTypeWriter = false;
+    OVERRIDETYPEWRITER = false;
 
     // Terminal line
-    terminal.innerHTML += "<span style='color:{0}'>{1}</span>".format(green, loc)
+    TERMINAL.innerHTML += "<span style='color:{0}'>{1}</span>".format(GREEN, LOCATION)
     printToElementWithID("<span id='input' contenteditable='true'></span>", 
                          "terminal");//editable text
 
@@ -665,7 +665,7 @@ function handlePaste (e)
 // Otherwise, skips past dialogue animation
 function keyCheck(e)
 {
-    if (actionKeycodes.indexOf(e.keyCode) == -1)
+    if (ACTIONKEYCODES.indexOf(e.keyCode) == -1)
     {
         inputElement = document.getElementById("input");
         // If a valid entry point exists...
@@ -693,7 +693,7 @@ function keyCheck(e)
         // If a valid entrypoint does not exist, skip dialogue.
         else
         {
-            overrideTypeWriter = true;
+            OVERRIDETYPEWRITER = true;
         }
     }
 }
@@ -710,7 +710,7 @@ function clickMobileHandler()
         }
         else
         {
-            overrideTypeWriter = true;
+            OVERRIDETYPEWRITER = true;
         }
     }
 }
