@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.3";
+const VERSION = "4.2.4";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -372,8 +372,8 @@ window.onload = function ()
 function launchSequence()
 {
     mobileString = "<span style='color:{0}'>".format(YELLOW) + 
-                    "You're on a mobile device! Please click anywhere to begin typing<br>" + 
-                    "(If on iOS Safari, you need to click next to the '$' symbol to begin).<br><br>"
+                    "You're on a mobile device! Please click anywhere on this page to begin typing.<br>" + 
+                    "(NOTE: If on iOS Safari, you need to click next to the '$' symbol to start typing)<br><br>"
                     "<br><br></span>".format(WHITE)
 
     printToElementWithID("<span style='color:{0}'>".format(WHITE) + 
