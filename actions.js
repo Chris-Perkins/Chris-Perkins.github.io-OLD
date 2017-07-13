@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.4";
+const VERSION = "4.2.5";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -25,76 +25,30 @@ var TERMINAL = null;
 
 /* !-- COMMAND DECLARATIONS --! */
 
-// Format of command: TYPE: Description_String
-const COMMANDTYPES = {
-                        PERSONAL: "Get to Know Me Better",
-                        LINK: "External Links",
-                        MISC: "Miscellaneous Commands", 
-                     };
-
 // All commands have a function and description
 class Command 
 {
-    constructor(action, description, commandType)
+    constructor(action, description)
     {
         this.action = action;
         this.description = description;
-        this.commandType = commandType;
     }
 }
 
 // Valid user commands
-const Commands = 
+const COMMANDS = 
 {
-    "help": new Command(function() 
+    /* PERSONAL INFORMATION COMMANDS */
+    "Get to Know Me Better":
+    {
+        "about": new Command(function()
         {
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
-            
-            // First create a dictionary of command types with empty arrays as values
-            dict_commands = {};
-            for (commandType in COMMANDTYPES)
-            {
-                dict_commands[COMMANDTYPES[commandType]] = [];
-            }
-
-            // Go through every command, append it to the corresponding commany type array
-            for(command in Commands)
-            {
-                dict_commands[Commands[command].commandType].push(command);
-            }
-
-            // Print out every command type and it's corresponding commands
-            for (commandType in COMMANDTYPES)
-            {
-                // Dashed line between command type description and actual commands
-                separateLine = "";
-                for (index in COMMANDTYPES[commandType]){separateLine += "-"};
-
-                printToElementWithID("<div style='color:{0}'>{1}<br>{2}<br></span>".format(
-                                     YELLOW, COMMANDTYPES[commandType], separateLine), CURRENTID);
-                
-                for (index in dict_commands[COMMANDTYPES[commandType]])
-                {
-                    command = dict_commands[COMMANDTYPES[commandType]][index];
-                    printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
-                                         YELLOW, command, Commands[command].description), CURRENTID);
-                }
-                printToElementWithID("<br>", CURRENTID);
-            }
-
-            CURRENTID += 1;
-            printInputLine();
-        }, "Displays all commands and their descriptions", COMMANDTYPES.MISC),
-
-    "about": new Command(function()
-        {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
+                                "terminal");
             printToElementWithID("<span style='color:{0}'><br>".format(YELLOW) + 
-                                 "ADMIN'S AUTOBIOGRAPHY:<br>" + 
-                                 "----------------------<br>" + 
-                                 "</span>", CURRENTID);
+                                "ADMIN'S AUTOBIOGRAPHY:<br>" + 
+                                "----------------------<br>" + 
+                                "</span>", CURRENTID);
             CURRENTID += 1;
 
             typeWriter([{
@@ -142,62 +96,24 @@ const Commands =
                                 TIMECONSTANT * 2
                         }],
                         printInputLine);
-        }, "Tells you a little bit about me", COMMANDTYPES.PERSONAL),
+        }, "Tells you a little bit about me"),
 
-    "clean": new Command(function()
+        "contact": new Command(function()
         {
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
-
-            if(LOCALSTORAGEACCESS)
-            {
-                localStorage.clear();
-                printToElementWithID("Cookies have been cleaned!<br><br>", CURRENTID);
-            }
-            else
-            {
-                printToElementWithID("There are no cookies to clean.<br><br>", CURRENTID);
-            }
-
-            CURRENTID += 1;
-            printInputLine();
-        }, "cleans saved cookies", COMMANDTYPES.MISC),
-
-    "clear": new Command(function()
-        {
-            TERMINAL.innerHTML = "";
-            printInputLine();
-        }, "clears the screen", COMMANDTYPES.MISC),
-
-    "contact": new Command(function()
-        {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
+                                "terminal");
             
-            printToElementWithID("email - christopherpaulperkins@gmail.com<br>" +
-                                 "phone number - (352)459-9716<br>" +  
-                                 "<span style='color:{0}'>".format(YELLOW) + 
-                                 "Note: I may not respond to phone calls as I don't answer at class or at work." + 
-                                 "<br><br></span>", CURRENTID);
+            printToElementWithID("<span style='color:{0}'>email</span> chris@chrisperkins.me<br>".format(YELLOW) +
+                                "<span style='color:{0}'>phone number</span> (352)459-9716<br>".format(YELLOW) +  
+                                "<span style='color:{0}'>".format(RED) + 
+                                "Note: I may not respond to unsolicited phone calls as I don't answer at class or work." + 
+                                "<br><br></span>", CURRENTID);
                 
                 CURRENTID += 1;
                 printInputLine();
-        }, "Displays my contact information", COMMANDTYPES.PERSONAL),
-
-    "github": new Command(function()
-        {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
-            
-            printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
-                                 "My GitHub Profile</a><br><br>", CURRENTID);
-
-            CURRENTID += 1;
-            printInputLine();
-        }, 
-        "Displays a clickable link to my GitHub account", COMMANDTYPES.LINK),
-    
-    "goals": new Command(function()
+        }, "Displays my contact information"),
+        
+        "goals": new Command(function()
         {
             typeWriter([
                         {
@@ -251,19 +167,9 @@ const Commands =
                                 "color:{0}".format(WHITE)
                         }], 
                         printInputLine);
-        }, "My personal computer-science goals", COMMANDTYPES.PERSONAL),
+        }, "My personal computer-science goals"),
         
-    "resume": new Command(function()
-        {
-            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                 "terminal");
-            printToElementWithID("<a href='Chris-Perkins-Resume.pdf' target='_blank'>" + 
-                                 "My Resume" + 
-                                 "</a><br><br>", CURRENTID);
-            CURRENTID += 1;
-            printInputLine();
-        }, "Displays a clickable link to my resume", COMMANDTYPES.LINK),
-    "skills": new Command(function()
+        "skills": new Command(function()
         {
             typeWriter([
                 {
@@ -317,31 +223,122 @@ const Commands =
                         TIMECONSTANT * 2
                 }],
                 printInputLine)
-        }, "Displays a list of my core skills", COMMANDTYPES.PERSONAL)
+        }, "Displays a list of my core skills")
+    },
+
+    /* Links to websites/info */
+    "External Links":
+    {
+        "github": new Command(function()
+        {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
+                                "terminal");
+            
+            printToElementWithID("<a href='https://github.com/Chris-Perkins' target='_blank'>" + 
+                                "My GitHub Profile</a><br><br>", CURRENTID);
+
+            CURRENTID += 1;
+            printInputLine();
+        }, 
+        "Displays a clickable link to my GitHub account"),
+
+        "resume": new Command(function()
+        {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
+                                "terminal");
+            printToElementWithID("<a href='Chris-Perkins-Resume.pdf' target='_blank'>" + 
+                                "My Resume" + 
+                                "</a><br><br>", CURRENTID);
+            CURRENTID += 1;
+            printInputLine();
+        }, "Displays a clickable link to my resume"),
+    },
+
+    /* Miscellaneous Commands (purely for quality of life) */
+    "Miscellaneous Commands":
+    {
+        "clean": new Command(function()
+        {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
+                                "terminal");
+
+            if(LOCALSTORAGEACCESS)
+            {
+                localStorage.clear();
+                printToElementWithID("Cookies have been cleaned!<br><br>", CURRENTID);
+            }
+            else
+            {
+                printToElementWithID("There are no cookies to clean.<br><br>", CURRENTID);
+            }
+
+            CURRENTID += 1;
+            printInputLine();
+        }, "cleans saved cookies"),
+
+        "clear": new Command(function()
+        {
+            TERMINAL.innerHTML = "";
+            printInputLine();
+        }, "clears the screen"),
+
+        "help": new Command(function() 
+        {
+            printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
+                                "terminal");
+
+            // Print out every command type and it's corresponding commands
+            for (commandType in COMMANDS)
+            {
+                // Dashed line between command type description and actual commands
+                separateLine = "";
+                for (index in commandType){separateLine += "-"};
+
+                printToElementWithID("<div style='color:{0}'>{1}<br>{2}<br></span>".format(
+                                    YELLOW, commandType, separateLine), CURRENTID);
+                
+                for (commandName in COMMANDS[commandType])
+                {
+                    command = COMMANDS[commandType][commandName];
+                    printToElementWithID("<span style='color:{0}'>{1}</span> {2}<br>".format(
+                                        YELLOW, commandName, command.description), CURRENTID);
+                }
+                printToElementWithID("<br>", CURRENTID);
+            }
+
+            CURRENTID += 1;
+            printInputLine();
+        }, "Displays all commands and their descriptions")
+    }
 }
 
 function getCommand(commandID)
 {
     commandID = commandID.toLowerCase();
-    // Do nothing on empty input to replicate terminal behavior
+    // If this is a valid command, execute it
+    for (commandType in COMMANDS)
+    {
+        if (typeof COMMANDS[commandType][commandID] !== "undefined")
+        {
+            COMMANDS[commandType][commandID].action();
+            return;
+        }
+    }
+
     if (commandID === "")
     {
         printInputLine();
     }
-    else if (typeof Commands[commandID] === "undefined")
+    else
     {
         printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                "terminal");
+                             "terminal");
         printToElementWithID("'{0}' is not a valid command.<br> ".format(commandID) + 
                              "Enter '<span style='color:{0}'>help</span>' ".format(YELLOW) +
                              "to view a list of available commands.<br><br>", CURRENTID);
 
         CURRENTID += 1;
         printInputLine();
-    }
-    else
-    {
-        Commands[commandID].action();
     }
 }
 
