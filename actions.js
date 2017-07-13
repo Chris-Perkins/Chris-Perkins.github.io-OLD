@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.5";
+const VERSION = "4.2.6";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -144,7 +144,7 @@ const COMMANDS =
                         {
                             "text":
                                 "Complete Princeton University's Algorithms I course<br>" + 
-                                "Complete 800 Codeforces problems (425+/800)<br>",
+                                "Complete 800 Codeforces problems (425+/500)<br>",
                             "style":
                                 "color:{0}".format(WHITE),
 
