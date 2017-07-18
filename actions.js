@@ -127,7 +127,7 @@ const COMMANDS =
                             "text":
                                 "Learn Python<br>" + 
                                 "Learn about hybrid and native mobile development<br>" + 
-                                "Participate in my first hackathon<br>" +
+                                "Participate in my first hackathon [eyeBot]<br>" +
                                 "'Spot my New Song' project<br>" + 
                                 "Complete Stanford University's machine learning course<br>", 
                             "style":
@@ -143,8 +143,8 @@ const COMMANDS =
                         },
                         {
                             "text":
-                                "Complete Princeton University's Algorithms I course<br>" + 
-                                "Complete 800 Codeforces problems (425+/500)<br>",
+                                "Complete 800 Codeforces problems (450+/500)<br>" +
+                                "'Lift Buddy', an iOS application to help with gym tracking<br>",
                             "style":
                                 "color:{0}".format(WHITE),
 
@@ -159,9 +159,8 @@ const COMMANDS =
                         },
                         {
                             "text":
-                                "Complete Stanford's Databases course<br>" + 
-                                "Join the UCF programming team<br>" + 
-                                "'Lift Buddy', an iOS application to help with gym tracking<br>" +  
+                                "Join the UCF programming team<br>" +  
+                                "A new, undecided adventure (can you help?)<br>" +  
                                 "<br>",
                             "style":
                                 "color:{0}".format(WHITE)
