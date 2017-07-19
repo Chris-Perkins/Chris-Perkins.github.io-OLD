@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.6";
+const VERSION = "4.2.7";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -143,7 +143,7 @@ const COMMANDS =
                         },
                         {
                             "text":
-                                "Complete 800 Codeforces problems (450+/500)<br>" +
+                                "Complete 500 Codeforces problems (450+/500)<br>" +
                                 "'Lift Buddy', an iOS application to help with gym tracking<br>",
                             "style":
                                 "color:{0}".format(WHITE),
