@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.7";
+const VERSION = "4.2.8";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -273,13 +273,13 @@ const COMMANDS =
 
             CURRENTID += 1;
             printInputLine();
-        }, "cleans saved cookies"),
+        }, "Cleans saved cookies"),
 
         "clear": new Command(function()
         {
             TERMINAL.innerHTML = "";
             printInputLine();
-        }, "clears the screen"),
+        }, "Clears the screen"),
 
         "help": new Command(function() 
         {
