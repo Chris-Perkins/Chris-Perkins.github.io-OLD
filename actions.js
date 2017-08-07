@@ -129,7 +129,8 @@ const COMMANDS =
                                 "Learn about hybrid and native mobile development<br>" + 
                                 "Participate in my first hackathon [eyeBot]<br>" +
                                 "'Spot my New Song' project<br>" + 
-                                "Complete Stanford University's machine learning course<br>", 
+                                "Complete Stanford University's machine learning course<br>" + 
+                                "Complete 500 Codeforces problems (500+/500)<br>", 
                             "style":
                                 "color:{0}".format(WHITE),
                         },
@@ -143,7 +144,6 @@ const COMMANDS =
                         },
                         {
                             "text":
-                                "Complete 500 Codeforces problems (450+/500)<br>" +
                                 "'Lift Buddy', an iOS application to help with gym tracking<br>",
                             "style":
                                 "color:{0}".format(WHITE),
