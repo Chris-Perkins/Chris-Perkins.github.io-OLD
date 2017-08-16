@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.2.9";
+const VERSION = "4.3.0";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -144,7 +144,7 @@ const COMMANDS =
                         },
                         {
                             "text":
-                                "'Lift Buddy', an iOS application to help with gym tracking<br>",
+                                "'Lifting Buddy', an iOS application to help with gym tracking<br>",
                             "style":
                                 "color:{0}".format(WHITE),
 
@@ -180,7 +180,7 @@ const COMMANDS =
                 },
                 {
                     "text":
-                        "Python Java C C++ C# " +
+                        "Python Java Kotlin C C++ C# " +
                         "Objective-C Swift SQL " +
                         "Javascript HTML CSS",
                     "style":
@@ -199,7 +199,7 @@ const COMMANDS =
                 {
                     "text":
                         "Git AccuRev XCode Android_Studio " + 
-                        "Unity Angular.js Node.js Cordova",
+                        "Unity Angular.js Node.js Cordova ",
                     "style":
                         "color:{0};word-spacing:10px".format(WHITE),
                     "time":
