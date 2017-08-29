@@ -1,5 +1,5 @@
 const LOCATION = "recruitor@CHRIS:~$ ";
-const VERSION = "4.3.0";
+const VERSION = "4.3.1";
 //global colors
 const GREEN = "#50e077";
 const YELLOW = "#ede671";
@@ -284,7 +284,7 @@ const COMMANDS =
         "help": new Command(function() 
         {
             printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
-                                "terminal");
+                                 "terminal");
 
             // Print out every command type and it's corresponding commands
             for (commandType in COMMANDS)
@@ -307,11 +307,11 @@ const COMMANDS =
 
             CURRENTID += 1;
             printInputLine();
-        }, "Displays all commands and their descriptions")
+        }, "Displays all commands and their descriptions"),
     }
 }
 
-function getCommand(commandID)
+function executeCommand(commandID)
 {
     commandID = commandID.toLowerCase();
     // If this is a valid command, execute it
@@ -370,11 +370,27 @@ function launchSequence()
     mobileString = "<span style='color:{0}'>".format(YELLOW) + 
                     "You're on a mobile device! Please click anywhere on this page to begin typing.<br>" + 
                     "(NOTE: If on iOS Safari, you need to click next to the '$' symbol to start typing)<br><br>"
-                    "<br><br></span>".format(WHITE)
+                    "<br><br></span>".format(WHITE);
 
     printToElementWithID("<span style='color:{0}'>".format(WHITE) + 
                          "ChrisPerkins.me - Home of your next Recruit [Version {0}]<br><br>".format(VERSION) +
                          "</span>", "terminal");
+    
+    printToElementWithID("<span id={0} style='color:{1}'></span>".format(CURRENTID, WHITE),
+                         "terminal");
+
+    // Print contact, resume, and github for easy access.
+    printToElementWithID("<span style='color:{0}'>{1}</span>{2}<br>".format(
+                            YELLOW, "Phone Number:..", "352-459-9716"), CURRENTID);
+    printToElementWithID("<span style='color:{0}'>{1}</span>{2}<br>".format(
+                            YELLOW, "Email Address..", "chris@chrisperkins.me"), CURRENTID);
+    printToElementWithID("<span style='color:{0}'>{1}</span>".format(
+                            YELLOW, "Resume.........") + 
+                            "<a href='Chris-Perkins-Resume.pdf' target='_blank'>" + 
+                            "My Resume" + 
+                            "</a><br>", CURRENTID);
+    printToElementWithID("<br>", CURRENTID);
+    CURRENTID += 1;
 
     if(!LOCALSTORAGEACCESS || !localStorage.visitCount)
     {
@@ -682,7 +698,7 @@ function keyCheck(e)
                 // No longer a valid input, so set it to past input
                 document.getElementById("input").setAttribute("id", "pastInput");
 
-                getCommand(inputElement.textContent);
+                executeCommand(inputElement.textContent);
             }
         }
         // If a valid entrypoint does not exist, skip dialogue.
