@@ -445,7 +445,7 @@ function launchSequence()
                     [{
                         "text": 
                             "ADMIN: CHRISTOPHER PERKINS<br>" + 
-                            "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br>" +
+                            "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR WINTER / SUMMER 2018<br>" +
                             "<br>" + 
                             "MISSION STATEMENT:<br>" + 
                             "Beauty lies in an ove-<br>" + 
