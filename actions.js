@@ -158,8 +158,7 @@ const COMMANDS =
                                 "color:{0}".format(YELLOW)
                         },
                         {
-                            "text":
-                                "Join the UCF programming team<br>" +  
+                            "text": 
                                 "A new, undecided adventure (can you help?)<br>" +  
                                 "<br>",
                             "style":
@@ -397,7 +396,7 @@ function launchSequence()
         typeWriter([{
                      "text": 
                         "ADMIN: CHRISTOPHER PERKINS<br>" + 
-                        "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR SUMMER 2018<br>" +
+                        "STATUS: OPEN TO INTERNSHIP OPPORTUNITIES FOR WINTER / SUMMER 2018<br>" +
                         "<br>" + 
                         "MISSION STATEMENT:<br>" + 
                         "Beauty lies in an overarching simplicity;<br>" + 
