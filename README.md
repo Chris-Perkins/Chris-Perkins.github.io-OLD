@@ -1,5 +1,5 @@
 # Chris-Perkins.github.io
-#### View my website [here](http://www.ChrisPerkins.me)
+#### My old website. View it [here](http://chrisperkins.me/Chris-Perkins.github.io-OLD/)
 
 A website written in HTML, CSS, and JavaScript that has the likeness of a terminal.
 
